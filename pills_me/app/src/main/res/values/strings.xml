@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">pills_me</string>
+    <string name="title_panel_add_pills">Ajouter un médicament</string>
+    <string name="label_name_pills">Nom :</string>
+    <string name="label_time_to_take">Durée par défaut</string>
+    <string name="label_defautl_take">Prise par défaut</string>
+    <string name="morning_take">Matin</string>
+    <string name="mid_day_take">Midi</string>
+    <string name="evening_take">Soire</string>
+    <string name="add_button">Ajouter</string>
+    <string name="title_panel_add_take_pills">Ajouter une prise de médicament</string>
+    <string name="open_activity_add_pill">+</string>
+    <string name="label_pill">Médicament</string>
+    <string name="label_date_pill">Dates</string>
+</resources>
