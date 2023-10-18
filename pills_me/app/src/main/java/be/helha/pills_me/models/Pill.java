@@ -15,7 +15,9 @@ public class Pill {
     }
 
     public Pill(){
-
+        mName = "MAbite";
+        mMorning = true;
+        mEvening = true;
     }
 
     public String getName(){
@@ -36,5 +38,13 @@ public class Pill {
 
     public void setMorning(Boolean b){
         mMorning = b;
+    }
+
+    public void setMidDay(boolean b) {
+        mMidDay = b;
+    }
+
+    public void setEvening(boolean b) {
+        mEvening = b;
     }
 }

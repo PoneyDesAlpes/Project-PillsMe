@@ -17,15 +17,17 @@
             android:exported="false" />
         <activity
             android:name=".controllers.AddTakePills"
-            android:exported="false" />
-        <activity
-            android:name=".controllers.AddPillsActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".controllers.AddPillActivity"
+            android:exported="false" >
         </activity>
 
         <meta-data

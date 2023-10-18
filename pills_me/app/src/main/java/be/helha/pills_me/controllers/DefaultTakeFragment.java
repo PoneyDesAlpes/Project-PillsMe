@@ -27,7 +27,7 @@ public class DefaultTakeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstaceState) {
         super.onCreate(savedInstaceState);
-        mPill = new Pill(); //ToDo: cahnger pour un aramètre qui est passé lors de la création du frag
+        mPill = new Pill(); //ToDo: cahnger pour un paramètre qui est passé lors de la création du frag
     }
 
     @Nullable
@@ -38,12 +38,19 @@ public class DefaultTakeFragment extends Fragment {
         mMorningCheckBox = (CheckBox) v.findViewById(R.id.mornign_cb);
         mMorningCheckBox.setChecked(mPill.isMorning());
         mMorningCheckBox.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        mPill.setMorning(isChecked);
-                    }
-                }
+                (buttonView, isChecked) -> mPill.setMorning(isChecked)
+        );
+
+        mMidDayCheckBox = (CheckBox) v.findViewById(R.id.mid_day_cb);
+        mMidDayCheckBox.setChecked(mPill.isMidDay());
+        mMidDayCheckBox.setOnCheckedChangeListener(
+                (buttonView, isChecked) -> mPill.setMidDay(isChecked)
+        );
+
+        mEveningCheckBox = (CheckBox) v.findViewById(R.id.evening_cb);
+        mEveningCheckBox.setChecked(mPill.isEvening());
+        mEveningCheckBox.setOnCheckedChangeListener(
+                (buttonView, isChecked) -> mPill.setEvening(isChecked)
         );
 
         return v;
