@@ -55,4 +55,16 @@ public class DefaultTakeFragment extends Fragment {
 
         return v;
     }
+
+    public boolean isMorningCheckBoxChecked(){
+        return mMorningCheckBox.isChecked();
+    }
+
+    public boolean isMidDayCheckBoxChecked(){
+        return mMidDayCheckBox.isChecked();
+    }
+
+    public boolean isEveningCheckBoxChecked(){
+        return mEveningCheckBox.isChecked();
+    }
 }

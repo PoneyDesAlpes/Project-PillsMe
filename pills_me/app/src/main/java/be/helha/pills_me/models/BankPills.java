@@ -25,4 +25,12 @@ public class BankPills {
     public ArrayList getBankPills(){
         return mPills;
     }
+
+    public ArrayList getBankPillsName(){
+        ArrayList listNamePills = new ArrayList();
+        for (Pill p :mPills) {
+            listNamePills.add(p.getName());
+        }
+        return listNamePills;
+    }
 }
