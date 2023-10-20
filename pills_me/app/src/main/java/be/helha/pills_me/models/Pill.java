@@ -14,12 +14,6 @@ public class Pill {
         mEvening = evening;
     }
 
-    public Pill(){
-        mName = "MAbite";
-        mMorning = true;
-        mEvening = true;
-    }
-
     public String getName(){
         return mName;
     }

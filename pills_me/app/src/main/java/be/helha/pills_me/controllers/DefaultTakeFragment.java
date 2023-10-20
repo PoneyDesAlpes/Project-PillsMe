@@ -21,13 +21,10 @@ public class DefaultTakeFragment extends Fragment {
     private CheckBox mMidDayCheckBox;
     private CheckBox mEveningCheckBox;
 
-
-
-
     @Override
-    public void onCreate(Bundle savedInstaceState) {
-        super.onCreate(savedInstaceState);
-        mPill = new Pill(); //ToDo: cahnger pour un paramètre qui est passé lors de la création du frag
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
     }
 
     @Nullable
@@ -35,23 +32,26 @@ public class DefaultTakeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_default_take, container, false);
 
-        mMorningCheckBox = (CheckBox) v.findViewById(R.id.mornign_cb);
-        mMorningCheckBox.setChecked(mPill.isMorning());
-        mMorningCheckBox.setOnCheckedChangeListener(
-                (buttonView, isChecked) -> mPill.setMorning(isChecked)
-        );
+        if(mPill != null){
+            mMorningCheckBox = (CheckBox) v.findViewById(R.id.mornign_cb);
+            mMorningCheckBox.setChecked(mPill.isMorning());
+            mMorningCheckBox.setOnCheckedChangeListener(
+                    (buttonView, isChecked) -> mPill.setMorning(isChecked)
+            );
 
-        mMidDayCheckBox = (CheckBox) v.findViewById(R.id.mid_day_cb);
-        mMidDayCheckBox.setChecked(mPill.isMidDay());
-        mMidDayCheckBox.setOnCheckedChangeListener(
-                (buttonView, isChecked) -> mPill.setMidDay(isChecked)
-        );
+            mMidDayCheckBox = (CheckBox) v.findViewById(R.id.mid_day_cb);
+            mMidDayCheckBox.setChecked(mPill.isMidDay());
+            mMidDayCheckBox.setOnCheckedChangeListener(
+                    (buttonView, isChecked) -> mPill.setMidDay(isChecked)
+            );
 
-        mEveningCheckBox = (CheckBox) v.findViewById(R.id.evening_cb);
-        mEveningCheckBox.setChecked(mPill.isEvening());
-        mEveningCheckBox.setOnCheckedChangeListener(
-                (buttonView, isChecked) -> mPill.setEvening(isChecked)
-        );
+            mEveningCheckBox = (CheckBox) v.findViewById(R.id.evening_cb);
+            mEveningCheckBox.setChecked(mPill.isEvening());
+            mEveningCheckBox.setOnCheckedChangeListener(
+                    (buttonView, isChecked) -> mPill.setEvening(isChecked)
+            );
+        }
+
 
         return v;
     }

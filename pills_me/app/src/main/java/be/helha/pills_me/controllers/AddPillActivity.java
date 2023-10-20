@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,19 +16,30 @@ public class AddPillActivity extends AppCompatActivity {
 
     private EditText mNameOfPills;
     private Button mAddbutton;
-    private DefaultTakeFragment fragmentController;
+    private DefaultTakeFragment mFragmentController;
+    private boolean mPillCreated;
+    private Pill mCurrentPillCreated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_pills);
 
+        mPillCreated = false;
+
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentController = (DefaultTakeFragment) fragmentManager.findFragmentById(R.id.fragmentContainerView);
+        mFragmentController = (DefaultTakeFragment) fragmentManager.findFragmentById(R.id.fragmentContainerView);
 
         mNameOfPills = findViewById(R.id.name_pill_edit_text);
         mAddbutton = findViewById(R.id.add_button);
-        mAddbutton.setOnClickListener(view -> createPill());
+        mAddbutton.setOnClickListener(view -> {
+            createPill();
+            if (mPillCreated && mCurrentPillCreated != null){
+                Toast.makeText(this, mCurrentPillCreated.getName()
+                        + " "
+                        + getString(R.string.pillAdded), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
     private void createPill(){
@@ -37,10 +47,12 @@ public class AddPillActivity extends AppCompatActivity {
             return;
         }
 
-        BankPills.getInstance().AddPill((
-                new Pill(mNameOfPills.getText().toString(),
-                fragmentController.isMorningCheckBoxChecked(),
-                fragmentController.isMidDayCheckBoxChecked(),
-                fragmentController.isEveningCheckBoxChecked())));
+        mCurrentPillCreated = new Pill(mNameOfPills.getText().toString(),
+                mFragmentController.isMorningCheckBoxChecked(),
+                mFragmentController.isMidDayCheckBoxChecked(),
+                mFragmentController.isEveningCheckBoxChecked());
+
+        BankPills.getInstance().AddPill(mCurrentPillCreated);
+        mPillCreated = true;
     }
 }

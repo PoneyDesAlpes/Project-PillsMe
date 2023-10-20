@@ -15,11 +15,12 @@ import be.helha.pills_me.R;
 import be.helha.pills_me.models.BankPills;
 import be.helha.pills_me.models.Pill;
 
-public class AddTakePills extends AppCompatActivity {
+public class AddTakePillsActivity extends AppCompatActivity {
 
     private FloatingActionButton mAddPillButton;
     private Spinner mSpinnerListPills;
     private ArrayAdapter<Pill> adapter;
+    private Button mAddTakePillButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +29,15 @@ public class AddTakePills extends AppCompatActivity {
 
         mAddPillButton = findViewById(R.id.open_add_pill_button);
         mAddPillButton.setOnClickListener(view -> {
-            Intent intent = new Intent(AddTakePills.this, AddPillActivity.class);
+            Intent intent = new Intent(AddTakePillsActivity.this, AddPillActivity.class);
             startActivity(intent);
         });
 
         mSpinnerListPills = findViewById(R.id.spinner);
-        adapter = new ArrayAdapter<>(AddTakePills.this, android.R.layout.simple_spinner_dropdown_item, BankPills.getInstance().getBankPillsName());
+        adapter = new ArrayAdapter<>(AddTakePillsActivity.this, android.R.layout.simple_spinner_dropdown_item, BankPills.getInstance().getBankPillsName());
         mSpinnerListPills.setAdapter(adapter);
 
-        Log.d("MAIN", "onCreate");
+        mAddTakePillButton = findViewById(R.id.add_take_pill_button);
     }
 
     protected void onResume(){
@@ -45,7 +46,7 @@ public class AddTakePills extends AppCompatActivity {
     }
 
     private void updateSpinner(){
-        adapter = new ArrayAdapter<>(AddTakePills.this, android.R.layout.simple_spinner_dropdown_item, BankPills.getInstance().getBankPillsName());
+        adapter = new ArrayAdapter<>(AddTakePillsActivity.this, android.R.layout.simple_spinner_dropdown_item, BankPills.getInstance().getBankPillsName());
         mSpinnerListPills.setAdapter(adapter);
     }
 }
