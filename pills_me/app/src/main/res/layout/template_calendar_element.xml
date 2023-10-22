@@ -22,8 +22,7 @@
         android:layout_height="wrap_content"
         android:paddingStart="15dp"
         android:text="@string/morning_take"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+        android:textSize="28sp" />
 
     <LinearLayout
         android:id="@+id/morning_container_pill"
@@ -38,8 +37,7 @@
         android:layout_height="wrap_content"
         android:paddingStart="15dp"
         android:text="@string/mid_day_take"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+        android:textSize="28sp" />
 
     <LinearLayout
         android:id="@+id/mid_day_container_pill"
@@ -54,8 +52,7 @@
         android:layout_height="wrap_content"
         android:paddingStart="15dp"
         android:text="@string/evening_take"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+        android:textSize="28sp" />
 
     <LinearLayout
         android:id="@+id/evening_container_pill"
