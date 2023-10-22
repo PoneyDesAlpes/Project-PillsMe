@@ -32,26 +32,9 @@ public class DefaultTakeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_default_take, container, false);
 
-        if(mPill != null){
-            mMorningCheckBox = (CheckBox) v.findViewById(R.id.mornign_cb);
-            mMorningCheckBox.setChecked(mPill.isMorning());
-            mMorningCheckBox.setOnCheckedChangeListener(
-                    (buttonView, isChecked) -> mPill.setMorning(isChecked)
-            );
-
-            mMidDayCheckBox = (CheckBox) v.findViewById(R.id.mid_day_cb);
-            mMidDayCheckBox.setChecked(mPill.isMidDay());
-            mMidDayCheckBox.setOnCheckedChangeListener(
-                    (buttonView, isChecked) -> mPill.setMidDay(isChecked)
-            );
-
-            mEveningCheckBox = (CheckBox) v.findViewById(R.id.evening_cb);
-            mEveningCheckBox.setChecked(mPill.isEvening());
-            mEveningCheckBox.setOnCheckedChangeListener(
-                    (buttonView, isChecked) -> mPill.setEvening(isChecked)
-            );
-        }
-
+        mMorningCheckBox = (CheckBox) v.findViewById(R.id.mornign_cb);
+        mMidDayCheckBox = (CheckBox) v.findViewById(R.id.mid_day_cb);
+        mEveningCheckBox = (CheckBox) v.findViewById(R.id.evening_cb);
 
         return v;
     }
@@ -66,5 +49,23 @@ public class DefaultTakeFragment extends Fragment {
 
     public boolean isEveningCheckBoxChecked(){
         return mEveningCheckBox.isChecked();
+    }
+
+    public void setMorningCheckBoxChecked(boolean b) {
+        mMorningCheckBox.setChecked(b);
+    }
+
+    public void setMidDayCheckBoxChecked(boolean b) {
+        mMidDayCheckBox.setChecked(b);
+    }
+
+    public void setEveningCheckBoxChecked(boolean b) {
+        mEveningCheckBox.setChecked(b);
+    }
+
+    public void resetCheckBox(){
+        mMorningCheckBox.setChecked(false);
+        mMidDayCheckBox.setChecked(false);
+        mEveningCheckBox.setChecked(false);
     }
 }

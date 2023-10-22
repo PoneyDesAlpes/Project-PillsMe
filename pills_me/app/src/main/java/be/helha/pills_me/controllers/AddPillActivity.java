@@ -38,6 +38,7 @@ public class AddPillActivity extends AppCompatActivity {
                 Toast.makeText(this, mCurrentPillCreated.getName()
                         + " "
                         + getString(R.string.pillAdded), Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
 

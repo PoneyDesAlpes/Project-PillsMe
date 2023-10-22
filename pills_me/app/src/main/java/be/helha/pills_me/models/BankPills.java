@@ -15,14 +15,14 @@ public class BankPills {
 
     private BankPills(){
         mPills = new ArrayList<>(); //ToDO : faire appel a une DB
-        mPills.add(new Pill("Ma bite", true, true, true));
+        mPills.add(new Pill("Ma bite", true, false, true));
     }
     
     public void AddPill(Pill p){
         mPills.add(p);
     }
 
-    public ArrayList getBankPills(){
+    public ArrayList<Pill> getBankPills(){
         return mPills;
     }
 
