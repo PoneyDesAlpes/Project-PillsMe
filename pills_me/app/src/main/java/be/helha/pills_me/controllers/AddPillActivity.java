@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import be.helha.pills_me.R;
@@ -17,6 +18,7 @@ public class AddPillActivity extends AppCompatActivity {
     private EditText mNameOfPills;
     private Button mAddbutton;
     private DefaultTakeFragment mFragmentController;
+    private NumberPicker mNumberPicker;
     private boolean mPillCreated;
     private Pill mCurrentPillCreated;
 
@@ -42,6 +44,10 @@ public class AddPillActivity extends AppCompatActivity {
             }
         });
 
+        mNumberPicker = findViewById(R.id.day_number_picker);
+        mNumberPicker.setMinValue(0b1);
+        mNumberPicker.setMaxValue(31);
+
     }
     private void createPill(){
         if(mNameOfPills.getText().toString().equals("")){
@@ -49,6 +55,7 @@ public class AddPillActivity extends AppCompatActivity {
         }
 
         mCurrentPillCreated = new Pill(mNameOfPills.getText().toString(),
+                mNumberPicker.getValue(),
                 mFragmentController.isMorningCheckBoxChecked(),
                 mFragmentController.isMidDayCheckBoxChecked(),
                 mFragmentController.isEveningCheckBoxChecked());

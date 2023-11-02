@@ -15,8 +15,6 @@ import be.helha.pills_me.R;
 import be.helha.pills_me.models.Pill;
 
 public class DefaultTakeFragment extends Fragment {
-    protected Pill mPill;
-
     private CheckBox mMorningCheckBox;
     private CheckBox mMidDayCheckBox;
     private CheckBox mEveningCheckBox;

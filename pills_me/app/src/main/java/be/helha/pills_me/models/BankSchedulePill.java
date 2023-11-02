@@ -12,8 +12,8 @@ public class BankSchedulePill {
 
     private BankSchedulePill(){
         mSchedulePills = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            mSchedulePills.add(new Pill("Pill " + i, true, false, true));
+        for (int i = 0; i < 10; i++) {//TODO change this shit!
+            mSchedulePills.add(new Pill("Pill " + i, 2 ,true, false, true));
         }
     }
 

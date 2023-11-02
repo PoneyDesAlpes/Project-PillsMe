@@ -15,7 +15,7 @@ public class BankPills {
 
     private BankPills(){
         mPills = new ArrayList<>(); //ToDO : faire appel a une DB
-        mPills.add(new Pill("Ma bite", true, false, true));
+        mPills.add(new Pill("Xanax",2, true, false, true));//TODO change this shit!
     }
     
     public void AddPill(Pill p){

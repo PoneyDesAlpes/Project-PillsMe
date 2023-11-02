@@ -14,4 +14,8 @@
     <string name="label_pill">Médicament</string>
     <string name="label_date_pill">Dates</string>
     <string name="pillAdded">à été ajouté avec succes</string>
+    <string name="start">Début :</string>
+    <string name="end">Fin :</string>
+    <string name="choseDate">Selectionner une date</string>
+    <string name="default_take">Durée recommandée (jour) :</string>
 </resources>

@@ -1,14 +1,17 @@
 package be.helha.pills_me.models;
 
-public class Pill {
+import java.io.Serializable;
+
+public class Pill implements Serializable {
     private String mName;
-    //ToDo: implemente time.
+    private int mDuration; //Time in day
     private boolean mMorning;
     private boolean mMidDay;
     private boolean mEvening;
 
-    public Pill(String name, boolean morning, boolean midDay, boolean evening){
+    public Pill(String name, int duration, boolean morning, boolean midDay, boolean evening){
         mName = name;
+        mDuration = duration;
         mMorning = morning;
         mMidDay = midDay;
         mEvening = evening;
@@ -17,6 +20,8 @@ public class Pill {
     public String getName(){
         return mName;
     }
+
+    public int getDuration(){return mDuration;}
 
     public Boolean isMorning(){
         return mMorning;
