@@ -13,11 +13,11 @@ import be.helha.pills_me.R;
 import be.helha.pills_me.models.BankPills;
 import be.helha.pills_me.models.Pill;
 
-public class AddPillActivity extends AppCompatActivity {
+public class AddMedicineActivity extends AppCompatActivity {
 
     private EditText mNameOfPills;
     private Button mAddbutton;
-    private DefaultTakeFragment mFragmentController;
+    private checkBoxMMEFragment mFragmentController;
     private NumberPicker mNumberPicker;
     private boolean mPillCreated;
     private Pill mCurrentPillCreated;
@@ -30,7 +30,7 @@ public class AddPillActivity extends AppCompatActivity {
         mPillCreated = false;
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        mFragmentController = (DefaultTakeFragment) fragmentManager.findFragmentById(R.id.fragmentContainerView);
+        mFragmentController = (checkBoxMMEFragment) fragmentManager.findFragmentById(R.id.fragmentContainerView);
 
         mNameOfPills = findViewById(R.id.name_pill_edit_text);
         mAddbutton = findViewById(R.id.add_button);
@@ -51,6 +51,7 @@ public class AddPillActivity extends AppCompatActivity {
     }
     private void createPill(){
         if(mNameOfPills.getText().toString().equals("")){
+            Toast.makeText(this, getString(R.string.pillNameEmpty), Toast.LENGTH_SHORT).show();
             return;
         }
 

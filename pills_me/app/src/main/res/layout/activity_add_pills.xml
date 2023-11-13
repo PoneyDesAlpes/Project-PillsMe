@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controllers.AddPillActivity">
+    tools:context=".controllers.AddMedicineActivity">
 
     <TextView
         android:id="@+id/title_panel_add_pils_text_view"
@@ -84,7 +84,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="be.helha.pills_me.controllers.DefaultTakeFragment"
+        android:name="be.helha.pills_me.controllers.checkBoxMMEFragment"
         android:layout_width="338dp"
         android:layout_height="197dp"
         app:layout_constraintBottom_toBottomOf="parent"

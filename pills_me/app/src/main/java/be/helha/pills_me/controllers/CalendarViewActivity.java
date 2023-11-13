@@ -2,25 +2,19 @@ package be.helha.pills_me.controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.Serializable;
-
 import be.helha.pills_me.R;
-import be.helha.pills_me.models.BankSchedulePill;
+import be.helha.pills_me.models.BankPrescription;
 import be.helha.pills_me.models.Pill;
 
-public class CalendarPillsActivity extends AppCompatActivity {
+public class CalendarViewActivity extends AppCompatActivity {
 
     private static final int FONT_SIZE = 22;
     private FloatingActionButton mAddTakePill;
@@ -29,17 +23,17 @@ public class CalendarPillsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calendar_pills);
+        setContentView(R.layout.activity_calendar_view);
 
         mAddTakePill = findViewById(R.id.open_add_take_pill_button);
         mAddTakePill.setOnClickListener(view -> {
-            Intent intent = new Intent(this, AddTakePillsActivity.class);
+            Intent intent = new Intent(this, AddPrescriptionActivity.class);
             startActivity(intent);
         });
 
         mCalendarContainer = findViewById(R.id.container_element_calendare);
 
-        for(Pill p : BankSchedulePill.getInstance().getSchedulePills()){
+        for(Pill p : BankPrescription.getInstance().getSchedulePills()){
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             Fragment fragment = CalendarElementFragment.newInstance(p);
             ft.add(R.id.container_element_calendare, fragment);

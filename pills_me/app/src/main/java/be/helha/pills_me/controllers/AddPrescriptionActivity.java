@@ -16,19 +16,18 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import be.helha.pills_me.R;
 import be.helha.pills_me.models.BankPills;
 import be.helha.pills_me.models.Pill;
 
-public class AddTakePillsActivity extends AppCompatActivity {
+public class AddPrescriptionActivity extends AppCompatActivity {
 
     private FloatingActionButton mAddPillButton;
     private Spinner mSpinnerListPills;
     private ArrayAdapter<Pill> adapter;
     private Button mAddTakePillButton;
-    private DefaultTakeFragment mFragmentController;
+    private checkBoxMMEFragment mFragmentController;
     private ImageButton mButtonCalendarPickerStart;
     private ImageButton mButtonCalendarPickerEnd;
     private TextView mStartDateTextView;
@@ -44,24 +43,24 @@ public class AddTakePillsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_take_pills);
+        setContentView(R.layout.activity_prescription_pills);
 
         //Button pour ajouter un pill dans la vue calendar
         //mAddTakePillButton = findViewById(R.id.add_take_pill_button);
 
 
-        mFragmentController = (DefaultTakeFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView2);
+        mFragmentController = (checkBoxMMEFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView2);
         mDefaultTakeTextView = findViewById(R.id.default_time_text_view);
 
         //Button pour ovrir la page pour ajouter des medicamants
         mAddPillButton = findViewById(R.id.open_add_pill_button);
         mAddPillButton.setOnClickListener(view -> {
-            Intent intent = new Intent(AddTakePillsActivity.this, AddPillActivity.class);
+            Intent intent = new Intent(AddPrescriptionActivity.this, AddMedicineActivity.class);
             startActivity(intent);
         });
 
         mSpinnerListPills = findViewById(R.id.spinner);
-        adapter = new ArrayAdapter<>(AddTakePillsActivity.this, android.R.layout.simple_spinner_dropdown_item, BankPills.getInstance().getBankPillsName());
+        adapter = new ArrayAdapter<>(AddPrescriptionActivity.this, android.R.layout.simple_spinner_dropdown_item, BankPills.getInstance().getBankPillsName());
         mSpinnerListPills.setAdapter(adapter);
 
         mSpinnerListPills.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -104,7 +103,7 @@ public class AddTakePillsActivity extends AppCompatActivity {
         day = c.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog dpd = new DatePickerDialog(
-                AddTakePillsActivity.this,
+                AddPrescriptionActivity.this,
                 (datePicker, year, month, day) -> {
                     if (startTextView != null) {
                         startTextView.setText(day + "/" + (month + 1) + "/" + year);
@@ -123,7 +122,7 @@ public class AddTakePillsActivity extends AppCompatActivity {
     }
 
     private void updateSpinner(){
-        adapter = new ArrayAdapter<>(AddTakePillsActivity.this, android.R.layout.simple_spinner_dropdown_item, BankPills.getInstance().getBankPillsName());
+        adapter = new ArrayAdapter<>(AddPrescriptionActivity.this, android.R.layout.simple_spinner_dropdown_item, BankPills.getInstance().getBankPillsName());
         mSpinnerListPills.setAdapter(adapter);
     }
 

@@ -18,4 +18,5 @@
     <string name="end">Fin :</string>
     <string name="choseDate">Selectionner une date</string>
     <string name="default_take">Durée recommandée (jour) :</string>
+    <string name="pillNameEmpty">Veuilliez renseigner le nom</string>
 </resources>

@@ -2,24 +2,24 @@ package be.helha.pills_me.models;
 
 import java.util.ArrayList;
 
-public class BankSchedulePill {
+public class BankPrescription {
     //contain the list of schedule pill
     //for each pill schedule one fragment
 
-    private static BankSchedulePill instance;
+    private static BankPrescription instance;
 
     private ArrayList<Pill> mSchedulePills;
 
-    private BankSchedulePill(){
+    private BankPrescription(){
         mSchedulePills = new ArrayList<>();
         for (int i = 0; i < 10; i++) {//TODO change this shit!
             mSchedulePills.add(new Pill("Pill " + i, 2 ,true, false, true));
         }
     }
 
-    public static BankSchedulePill getInstance(){
+    public static BankPrescription getInstance(){
         if(instance == null){
-            instance = new BankSchedulePill();
+            instance = new BankPrescription();
         }
         return instance;
     }

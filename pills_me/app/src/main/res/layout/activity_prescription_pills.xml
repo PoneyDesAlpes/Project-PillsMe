@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controllers.AddTakePillsActivity">
+    tools:context=".controllers.AddPrescriptionActivity">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/open_add_pill_button"
@@ -174,7 +174,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView2"
-        android:name="be.helha.pills_me.controllers.DefaultTakeFragment"
+        android:name="be.helha.pills_me.controllers.checkBoxMMEFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="88dp"

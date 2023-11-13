@@ -5,16 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import be.helha.pills_me.R;
-import be.helha.pills_me.models.Pill;
 
-public class DefaultTakeFragment extends Fragment {
+public class checkBoxMMEFragment extends Fragment {
     private CheckBox mMorningCheckBox;
     private CheckBox mMidDayCheckBox;
     private CheckBox mEveningCheckBox;
@@ -28,7 +26,7 @@ public class DefaultTakeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_default_take, container, false);
+        View v = inflater.inflate(R.layout.fragment_check_box_mme, container, false);
 
         mMorningCheckBox = (CheckBox) v.findViewById(R.id.mornign_cb);
         mMidDayCheckBox = (CheckBox) v.findViewById(R.id.mid_day_cb);

@@ -34,16 +34,4 @@ public class Pill implements Serializable {
     public boolean isEvening(){
         return mEvening;
     }
-
-    public void setMorning(Boolean b){
-        mMorning = b;
-    }
-
-    public void setMidDay(boolean b) {
-        mMidDay = b;
-    }
-
-    public void setEvening(boolean b) {
-        mEvening = b;
-    }
 }
