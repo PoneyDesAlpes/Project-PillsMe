@@ -60,19 +60,21 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         });
 
         mSpinnerListPills = findViewById(R.id.spinner);
-        adapter = new ArrayAdapter<>(AddPrescriptionActivity.this, android.R.layout.simple_spinner_dropdown_item, BankPills.getInstance().getBankPillsName());
+        //TODO : call the DB
+        //adapter = new ArrayAdapter<>(AddPrescriptionActivity.this, android.R.layout.simple_spinner_dropdown_item, BankPills.getInstance().getBankPillsName());
         mSpinnerListPills.setAdapter(adapter);
 
         mSpinnerListPills.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                for(Pill p : BankPills.getInstance().getBankPills()){
-                    if(p.getName().equals(mSpinnerListPills.getSelectedItem().toString())){
-                        setCheckBox(p);
-                        currentPill = p;
-                    }
-                }
-                mDefaultTakeTextView.setText(String.valueOf(currentPill.getDuration()));
+                //TODO : call the DB
+//                for(Pill p : BankPills.getInstance().getBankPills()){
+//                    if(p.getName().equals(mSpinnerListPills.getSelectedItem().toString())){
+//                        setCheckBox(p);
+//                        currentPill = p;
+//                    }
+//                }
+//                mDefaultTakeTextView.setText(String.valueOf(currentPill.getDuration()));
             }
 
             @Override
@@ -96,6 +98,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
             //dpf.show(getSupportFragmentManager(), "datePicker");
     }
 
+    //TODO : change the date format
     private void showPopUpCalendar(TextView startTextView, TextView endTextView) {
         final Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
@@ -121,9 +124,11 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         updateSpinner();
     }
 
+    //TODO : get the name of each pill to display in the spinner
     private void updateSpinner(){
-        adapter = new ArrayAdapter<>(AddPrescriptionActivity.this, android.R.layout.simple_spinner_dropdown_item, BankPills.getInstance().getBankPillsName());
-        mSpinnerListPills.setAdapter(adapter);
+        //TODO : call the DB
+        //adapter = new ArrayAdapter<>(AddPrescriptionActivity.this, android.R.layout.simple_spinner_dropdown_item, BankPills.getInstance().getBankPillsName());
+        //mSpinnerListPills.setAdapter(adapter);
     }
 
     private void setCheckBox(Pill p){

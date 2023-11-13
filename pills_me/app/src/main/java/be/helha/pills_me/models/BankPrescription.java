@@ -2,6 +2,8 @@ package be.helha.pills_me.models;
 
 import java.util.ArrayList;
 
+
+//doit changer ne plus prendre des pill mais des prescription
 public class BankPrescription {
     //contain the list of schedule pill
     //for each pill schedule one fragment

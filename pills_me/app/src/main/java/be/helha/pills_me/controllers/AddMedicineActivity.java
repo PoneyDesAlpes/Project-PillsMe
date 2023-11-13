@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import java.util.UUID;
+
 import be.helha.pills_me.R;
 import be.helha.pills_me.models.BankPills;
 import be.helha.pills_me.models.Pill;
@@ -55,13 +57,15 @@ public class AddMedicineActivity extends AppCompatActivity {
             return;
         }
 
-        mCurrentPillCreated = new Pill(mNameOfPills.getText().toString(),
+        mCurrentPillCreated = new Pill(
+                mNameOfPills.getText().toString(),
                 mNumberPicker.getValue(),
                 mFragmentController.isMorningCheckBoxChecked(),
                 mFragmentController.isMidDayCheckBoxChecked(),
                 mFragmentController.isEveningCheckBoxChecked());
 
-        BankPills.getInstance().AddPill(mCurrentPillCreated);
+        //TODO : add to DB
+        //BankPills.getInstance().AddPill(mCurrentPillCreated);
         mPillCreated = true;
     }
 }
