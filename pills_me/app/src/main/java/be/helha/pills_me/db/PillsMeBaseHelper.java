@@ -14,8 +14,7 @@ public class PillsMeBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("create table " + PillsMeDbSchema.PillTable.NAME + "(" +
-                PillsMeDbSchema.PillTable.Cols.UUID + "integer primary key autoincrement, " +
-                PillsMeDbSchema.PillTable.Cols.UUID + ", " +
+                PillsMeDbSchema.PillTable.Cols.ID + " integer primary key autoincrement, " +
                 PillsMeDbSchema.PillTable.Cols.DURATION + ", " +
                 PillsMeDbSchema.PillTable.Cols.NAME + ", " +
                 PillsMeDbSchema.PillTable.Cols.MORNING + ", " +
@@ -23,9 +22,8 @@ public class PillsMeBaseHelper extends SQLiteOpenHelper {
                 PillsMeDbSchema.PillTable.Cols.EVENING + ")"
         );
 
-        sqLiteDatabase.execSQL("create table " + PillsMeDbSchema.PrescriptionTable.NAME + "(" +
-            " _id integer primary key autoincrement, " +
-            PillsMeDbSchema.PrescriptionTable.Cols.UUID + ", " +
+        sqLiteDatabase.execSQL("create table " + PillsMeDbSchema.PrescriptionTable.NAME +  "(" +
+            PillsMeDbSchema.PrescriptionTable.Cols.ID + " integer primary key autoincrement, " +
             PillsMeDbSchema.PrescriptionTable.Cols.START_DATE_PERIOD + ", " +
             PillsMeDbSchema.PrescriptionTable.Cols.END_DATE_PERIOD + ", " +
             PillsMeDbSchema.PrescriptionTable.Cols.MORNING + ", " +

@@ -3,56 +3,54 @@ package be.helha.pills_me.models;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import be.helha.pills_me.db.PillCursorWrapper;
 import be.helha.pills_me.db.PillsMeBaseHelper;
 import be.helha.pills_me.db.PillsMeDbSchema;
 
-
-//Equivalent de crimeLab
 public class BankPills {
-    private static BankPills sBankPills;
-
+    private static BankPills instance;
     private Context mContext;
     private SQLiteDatabase mDatabase;
 
-    public static BankPills getInstance(Context context){
-        if(sBankPills == null){
-            sBankPills = new BankPills(context);
+    public static BankPills getInstance(Context context) {
+        if (instance == null) {
+            instance = new BankPills(context);
         }
-        return sBankPills;
+        return instance;
     }
 
-    private BankPills(Context context){
+    private BankPills(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new PillsMeBaseHelper(mContext).getWritableDatabase();
     }
 
-    public void addPill(Pill p){
+    public void addPill(Pill p) {
         mDatabase.insert(PillsMeDbSchema.PillTable.NAME, null, getContentValues(p));
+        Log.d("PillsMe", "Pill added to DB");
     }
 
-    public void updatePill(Pill p){
-        String uuidString = p.getUUID().toString();
+    public void updatePill(Pill p) {
+        String id = p.getId().toString();
         ContentValues values = getContentValues(p);
 
         mDatabase.update(PillsMeDbSchema.PillTable.NAME, values,
-                PillsMeDbSchema.PillTable.Cols.UUID + " = ?",
-                new String[] {uuidString});
+                PillsMeDbSchema.PillTable.Cols.ID + " = ?",
+                new String[]{id});
     }
 
-    public Pill getPill(UUID id){
+    public Pill getPill(Integer id) {
         PillCursorWrapper cursor = queryPills(
-                PillsMeDbSchema.PillTable.Cols.UUID + " = ?",
-                new String[] {id.toString()}
+                PillsMeDbSchema.PillTable.Cols.ID + " = ?",
+                new String[]{id.toString()}
         );
 
-        try{
-            if(cursor.getCount() == 0){
+        try {
+            if (cursor.getCount() == 0) {
                 return null;
             }
             cursor.moveToFirst();
@@ -62,12 +60,12 @@ public class BankPills {
         }
     }
 
-    public List<Pill> getPills(){
+    public List<Pill> getPills() {
         List<Pill> pills = new ArrayList<>();
         PillCursorWrapper cursor = queryPills(null, null);
-        try{
+        try {
             cursor.moveToFirst();
-            while(!cursor.isAfterLast()){
+            while (!cursor.isAfterLast()) {
                 pills.add(cursor.getPill());
                 cursor.moveToNext();
             }
@@ -77,10 +75,8 @@ public class BankPills {
         return pills;
     }
 
-    private ContentValues getContentValues(Pill p){
+    private ContentValues getContentValues(Pill p) {
         ContentValues values = new ContentValues();
-        values.put(PillsMeDbSchema.PillTable.Cols.UUID,
-                p.getUUID().toString());
         values.put(PillsMeDbSchema.PillTable.Cols.NAME,
                 p.getName());
         values.put(PillsMeDbSchema.PillTable.Cols.DURATION,
@@ -94,13 +90,14 @@ public class BankPills {
         return values;
     }
 
-    private PillCursorWrapper queryPills(String whereClause, String[] whereArgs){
-        return new PillCursorWrapper(mDatabase.query(
-                PillsMeDbSchema.PillTable.NAME,
-                null,
-                whereClause,
-                whereArgs,
-                null,null,null)
+    private PillCursorWrapper queryPills(String whereClause, String[] whereArgs) {
+        return new PillCursorWrapper(
+                mDatabase.query(
+                        PillsMeDbSchema.PillTable.NAME,
+                        null,
+                        whereClause,
+                        whereArgs,
+                        null, null, null)
         );
     }
 

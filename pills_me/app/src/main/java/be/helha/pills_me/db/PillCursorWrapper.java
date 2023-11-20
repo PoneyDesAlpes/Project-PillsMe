@@ -3,8 +3,6 @@ package be.helha.pills_me.db;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import java.util.UUID;
-
 import be.helha.pills_me.models.Pill;
 
 public class PillCursorWrapper extends CursorWrapper {
@@ -13,8 +11,8 @@ public class PillCursorWrapper extends CursorWrapper {
     }
 
     public Pill getPill(){
-        String uuidString =
-                getString(getColumnIndex(PillsMeDbSchema.PillTable.Cols.UUID));
+        String idString =
+                getString(getColumnIndex(PillsMeDbSchema.PillTable.Cols.ID));
         String name =
                 getString(getColumnIndex(PillsMeDbSchema.PillTable.Cols.NAME));
         int duration =
@@ -30,7 +28,7 @@ public class PillCursorWrapper extends CursorWrapper {
         boolean middayBool = (midday != 0);
         boolean eveningBool = (evening != 0);
 
-        Pill pill = new Pill(UUID.fromString(uuidString), name, duration, morningBool, middayBool, eveningBool);
+        Pill pill = new Pill(Integer.parseInt(idString), name, duration, morningBool, middayBool, eveningBool);
         return pill;
     }
 }

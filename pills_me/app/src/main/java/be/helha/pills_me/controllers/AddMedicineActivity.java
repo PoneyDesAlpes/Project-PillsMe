@@ -9,8 +9,6 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
-import java.util.UUID;
-
 import be.helha.pills_me.R;
 import be.helha.pills_me.models.BankPills;
 import be.helha.pills_me.models.Pill;
@@ -21,7 +19,6 @@ public class AddMedicineActivity extends AppCompatActivity {
     private Button mAddbutton;
     private checkBoxMMEFragment mFragmentController;
     private NumberPicker mNumberPicker;
-    private boolean mPillCreated;
     private Pill mCurrentPillCreated;
 
     @Override
@@ -29,16 +26,14 @@ public class AddMedicineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_pills);
 
-        mPillCreated = false;
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         mFragmentController = (checkBoxMMEFragment) fragmentManager.findFragmentById(R.id.fragmentContainerView);
 
         mNameOfPills = findViewById(R.id.name_pill_edit_text);
         mAddbutton = findViewById(R.id.add_button);
         mAddbutton.setOnClickListener(view -> {
-            createPill();
-            if (mPillCreated && mCurrentPillCreated != null){
+            boolean isPillCreate =createPill();
+            if (isPillCreate && mCurrentPillCreated != null){
                 Toast.makeText(this, mCurrentPillCreated.getName()
                         + " "
                         + getString(R.string.pillAdded), Toast.LENGTH_SHORT).show();
@@ -51,10 +46,9 @@ public class AddMedicineActivity extends AppCompatActivity {
         mNumberPicker.setMaxValue(31);
 
     }
-    private void createPill(){
+    private boolean createPill(){
         if(mNameOfPills.getText().toString().equals("")){
-            Toast.makeText(this, getString(R.string.pillNameEmpty), Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
 
         mCurrentPillCreated = new Pill(
@@ -64,8 +58,7 @@ public class AddMedicineActivity extends AppCompatActivity {
                 mFragmentController.isMidDayCheckBoxChecked(),
                 mFragmentController.isEveningCheckBoxChecked());
 
-        //TODO : add to DB
-        //BankPills.getInstance().AddPill(mCurrentPillCreated);
-        mPillCreated = true;
+        BankPills.getInstance(this).addPill(mCurrentPillCreated);
+        return true;
     }
 }

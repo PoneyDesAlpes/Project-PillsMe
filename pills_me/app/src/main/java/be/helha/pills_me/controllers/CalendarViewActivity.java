@@ -6,19 +6,32 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateUtils;
+import android.util.Log;
 import android.widget.LinearLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 import be.helha.pills_me.R;
 import be.helha.pills_me.models.BankPrescription;
-import be.helha.pills_me.models.Pill;
+import be.helha.pills_me.models.CalendarElement;
+import be.helha.pills_me.models.Prescription;
 
 public class CalendarViewActivity extends AppCompatActivity {
 
     private static final int FONT_SIZE = 22;
     private FloatingActionButton mAddTakePill;
     private LinearLayout mCalendarContainer;
+
+    private static final int AFTER = 1;
+    private static final int BEFORE = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,58 +44,89 @@ public class CalendarViewActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        mCalendarContainer = findViewById(R.id.container_element_calendare);
+        initCalendar();
+    }
 
-        for(Pill p : BankPrescription.getInstance().getSchedulePills()){
+    public void initCalendar(){
+        mCalendarContainer = findViewById(R.id.container_element_calendare);
+        mCalendarContainer.removeAllViews();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("d/M/yyyy", Locale.FRANCE);
+        Calendar dayToDisplay = Calendar.getInstance();
+        dayToDisplay.getTime();
+        Log.d("DEBUG", "dayToDisplay: " + dayToDisplay.getTime());
+
+        for(int indexDay = 0; indexDay < 30 ; indexDay++) {
+
+            //dayToDisplay.setTime(dateOfTheDay);
+            dayToDisplay = Calendar.getInstance();
+            dayToDisplay.getTime();//reset to current day
+            dayToDisplay.add(Calendar.DAY_OF_MONTH, indexDay);
+            CalendarElement calendarElement = new CalendarElement(sdf.format(dayToDisplay.getTime()));
+
+            for (Prescription p : BankPrescription.getInstance(this).getPrescriptions()) {
+                Calendar startDayPrescription = Calendar.getInstance();
+                Calendar endDayPrescription = Calendar.getInstance();
+
+                String simplifiedDateToDisplay = "";
+                String simplifiedStartDate;
+                String simplifiedEndDate;
+
+                try {
+                    startDayPrescription.setTime(sdf.parse(p.getStartDate()));
+                    endDayPrescription.setTime(sdf.parse(p.getEndDate()));
+
+
+                    simplifiedDateToDisplay = sdf.format(dayToDisplay.getTime());
+                    simplifiedStartDate = sdf.format(startDayPrescription.getTime());
+                    simplifiedEndDate = sdf.format(endDayPrescription.getTime());
+
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+                if(p.isMorning()){
+                    if(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER
+                            && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER){
+                        Log.d("DEBUG", "1:No Display");
+                    }
+
+                    if(simplifiedStartDate.equals(simplifiedDateToDisplay)
+                            && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER){
+                        Log.d("DEBUG", "2:Display");
+                    }
+
+                    if(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE
+                            && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER){
+                        Log.d("DEBUG", "3:Display");
+                    }
+
+                    if(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE
+                            && simplifiedEndDate.equals(simplifiedDateToDisplay)){
+                        Log.d("DEBUG", "4:Display");
+                    }
+
+                    if(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE
+                            && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE){
+                        Log.d("DEBUG", "5:No Display");
+                    }
+                }
+                if(p.isMidDay()){
+                    calendarElement.addMidDayPrescription(p);
+                }
+                if(p.isEvening()){
+                    calendarElement.addEveningPrescription(p);
+                }
+            }
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            Fragment fragment = CalendarElementFragment.newInstance(p);
+            Fragment fragment = CalendarElementFragment.newInstance(calendarElement);
             ft.add(R.id.container_element_calendare, fragment);
             ft.commit();
         }
     }
 
-    //----------------Usage without fragment----------------//
-
-//    private View initContainerView(Pill p){
-//        View itemView = getLayoutInflater().inflate(R.layout.fragment_calendar_element, null);
-//        //TextView date = itemView.findViewById(R.id.date_text_view);//ToDo: ajouter la date dynamiquement
-//
-//        TextView morning = itemView.findViewById(R.id.morning_text_view);
-//        TextView midDay = itemView.findViewById(R.id.mid_day_text_view);
-//        TextView evening = itemView.findViewById(R.id.evening_text_view);
-//
-//        LinearLayout contMorning = itemView.findViewById(R.id.morning_container_pill);
-//        LinearLayout contMidDay = itemView.findViewById(R.id.mid_day_container_pill);
-//        LinearLayout contEvening = itemView.findViewById(R.id.evening_container_pill);
-//
-//        if(p.isMorning()){
-//            contMorning.addView(createtextView(p.getName()));
-//        }
-//        else {
-//            morning.setVisibility(View.GONE);
-//            contMorning.setVisibility(View.GONE);
-//        }
-//        if(p.isMidDay()){
-//            contMidDay.addView(createtextView(p.getName()));
-//        }
-//        else {
-//            midDay.setVisibility(View.GONE);
-//            contMidDay.setVisibility(View.GONE);
-//        }
-//        if(p.isEvening()){
-//            contEvening.addView(createtextView(p.getName()));
-//        }
-//        else {
-//            evening.setVisibility(View.GONE);
-//            contEvening.setVisibility(View.GONE);
-//        }
-//        return itemView;
-//    }
-//
-//    private View createtextView(String text){
-//        TextView textView = new TextView(this);
-//        textView.setText(text);
-//        textView.setTextSize(FONT_SIZE);
-//        return textView;
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initCalendar();
+    }
 }
