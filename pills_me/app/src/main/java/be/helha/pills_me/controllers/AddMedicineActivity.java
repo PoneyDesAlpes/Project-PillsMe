@@ -16,7 +16,7 @@ import be.helha.pills_me.models.Pill;
 public class AddMedicineActivity extends AppCompatActivity {
     private EditText mNameOfPills;
     private Button mAddbutton;
-    private checkBoxMMEFragment mFragmentController;
+    private CheckBoxMMEFragment mFragmentController;
     private NumberPicker mNumberPicker;
 
     private static final int MIN_VALUE = 1;
@@ -29,7 +29,7 @@ public class AddMedicineActivity extends AppCompatActivity {
 
         //Get the fragment which contains the checkboxes
         FragmentManager fragmentManager = getSupportFragmentManager();
-        mFragmentController = (checkBoxMMEFragment) fragmentManager.findFragmentById(R.id.fragmentContainerView);
+        mFragmentController = (CheckBoxMMEFragment) fragmentManager.findFragmentById(R.id.fragmentContainerView);
 
         mNameOfPills = findViewById(R.id.name_pill_edit_text);
 
@@ -39,8 +39,7 @@ public class AddMedicineActivity extends AppCompatActivity {
 
         mAddbutton = findViewById(R.id.add_button);
         mAddbutton.setOnClickListener(view -> {
-            boolean isPillCreate = createPill();
-            if (isPillCreate) {
+            if (createPill()) {
                 Toast.makeText(this, getString(R.string.pillAdded), Toast.LENGTH_SHORT).show();
                 finish(); //Close the activity
             }

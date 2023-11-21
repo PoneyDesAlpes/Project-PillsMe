@@ -24,7 +24,7 @@ import be.helha.pills_me.models.BankPrescription;
 import be.helha.pills_me.models.CalendarElement;
 import be.helha.pills_me.models.Prescription;
 
-public class CalendarViewActivity extends AppCompatActivity {
+public class CalendarViewActivity extends AppCompatActivity { //TODO: Refactor this class
 
     private static final int FONT_SIZE = 22;
     private FloatingActionButton mAddTakePill;
@@ -104,40 +104,6 @@ public class CalendarViewActivity extends AppCompatActivity {
                         calendarElement.addEveningPrescription(p);
                     }
                 }
-
-//                if(p.isMorning()){
-//                    if(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER
-//                            && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER){
-//                        Log.d("DEBUG", "1:No Display");
-//                    }
-//
-//                    if(simplifiedStartDate.equals(simplifiedDateToDisplay)
-//                            && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER){
-//                        Log.d("DEBUG", "2:Display");
-//                    }
-//
-//                    if(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE
-//                            && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER){
-//                        Log.d("DEBUG", "3:Display");
-//                    }
-//
-//                    if(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE
-//                            && simplifiedEndDate.equals(simplifiedDateToDisplay)){
-//                        Log.d("DEBUG", "4:Display");
-//                    }
-//
-//                    if(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE
-//                            && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE){
-//                        Log.d("DEBUG", "5:No Display");
-//                    }
-
-//                }
-//                if(p.isMidDay()){
-//                    calendarElement.addMidDayPrescription(p);
-//                }
-//                if(p.isEvening()){
-//                    calendarElement.addEveningPrescription(p);
-//                }
             }
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             Fragment fragment = CalendarElementFragment.newInstance(calendarElement);

@@ -15,7 +15,7 @@ import be.helha.pills_me.models.CalendarElement;
 import be.helha.pills_me.models.Pill;
 import be.helha.pills_me.models.Prescription;
 
-public class CalendarElementFragment extends Fragment {
+public class CalendarElementFragment extends Fragment { //TODO: Refactor this class
     private static final int FONT_SIZE = 22;
     public static final String CALENDAR_ELEMENT = "ce_key";
     //private CalendarElement mCalendarElement;
