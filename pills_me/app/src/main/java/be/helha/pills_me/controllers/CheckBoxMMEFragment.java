@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import be.helha.pills_me.R;
 
-public class checkBoxMMEFragment extends Fragment {
+public class CheckBoxMMEFragment extends Fragment {
     private CheckBox mMorningCheckBox;
     private CheckBox mMidDayCheckBox;
     private CheckBox mEveningCheckBox;
@@ -20,7 +20,6 @@ public class checkBoxMMEFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Nullable
@@ -35,15 +34,15 @@ public class checkBoxMMEFragment extends Fragment {
         return v;
     }
 
-    public boolean isMorningCheckBoxChecked(){
+    public boolean isMorningCheckBoxChecked() {
         return mMorningCheckBox.isChecked();
     }
 
-    public boolean isMidDayCheckBoxChecked(){
+    public boolean isMidDayCheckBoxChecked() {
         return mMidDayCheckBox.isChecked();
     }
 
-    public boolean isEveningCheckBoxChecked(){
+    public boolean isEveningCheckBoxChecked() {
         return mEveningCheckBox.isChecked();
     }
 
@@ -59,7 +58,7 @@ public class checkBoxMMEFragment extends Fragment {
         mEveningCheckBox.setChecked(b);
     }
 
-    public void resetCheckBox(){
+    public void resetCheckBox() {
         mMorningCheckBox.setChecked(false);
         mMidDayCheckBox.setChecked(false);
         mEveningCheckBox.setChecked(false);

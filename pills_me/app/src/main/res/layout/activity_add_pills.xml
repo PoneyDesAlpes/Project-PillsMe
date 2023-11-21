@@ -84,7 +84,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="be.helha.pills_me.controllers.checkBoxMMEFragment"
+        android:name="be.helha.pills_me.controllers.CheckBoxMMEFragment"
         android:layout_width="338dp"
         android:layout_height="197dp"
         app:layout_constraintBottom_toBottomOf="parent"

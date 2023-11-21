@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentManager;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -41,7 +40,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     private TextView mStartDateTextView;
     private TextView mEndDateTextView;
     private TextView mDefaultTakeTextView;
-    private checkBoxMMEFragment mFragmentController;
+    private CheckBoxMMEFragment mFragmentController;
     private Pill selectedPill;
 
     @Override
@@ -51,7 +50,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
         //get the fragment witch contain the checkbox
         FragmentManager fragmentManager = getSupportFragmentManager();
-        mFragmentController = (checkBoxMMEFragment) fragmentManager.findFragmentById(R.id.fragmentContainerView2);
+        mFragmentController = (CheckBoxMMEFragment) fragmentManager.findFragmentById(R.id.fragmentContainerView2);
 
         mDefaultTakeTextView = findViewById(R.id.default_time_text_view);
 
