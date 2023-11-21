@@ -17,6 +17,17 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/no_prescription_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/alatsi"
+        android:paddingStart="15dp"
+        android:text="@string/no_prescription"
+        android:textColor="#3F51B5"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <TextView
         android:id="@+id/morning_text_view"
         android:layout_width="184dp"
         android:layout_height="wrap_content"
