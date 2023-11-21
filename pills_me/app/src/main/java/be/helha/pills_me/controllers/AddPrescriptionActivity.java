@@ -1,6 +1,7 @@
 package be.helha.pills_me.controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -18,17 +18,17 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import be.helha.pills_me.R;
 import be.helha.pills_me.models.BankPills;
 import be.helha.pills_me.models.BankPrescription;
-import be.helha.pills_me.models.Prescription;
+import be.helha.pills_me.models.MyCalendarUtils;
 import be.helha.pills_me.models.Pill;
+import be.helha.pills_me.models.Prescription;
 
 public class AddPrescriptionActivity extends AppCompatActivity {
 
@@ -36,39 +36,26 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     private Spinner mSpinnerListPills;
     private ArrayAdapter<String> adapter;
     private Button mAddPrescriptionButton;
-    private checkBoxMMEFragment mFragmentController;
     private ImageButton mButtonCalendarPickerStart;
     private ImageButton mButtonCalendarPickerEnd;
     private TextView mStartDateTextView;
     private TextView mEndDateTextView;
     private TextView mDefaultTakeTextView;
-    private Pill currentPill;
-
-    String calculatedDate;
+    private checkBoxMMEFragment mFragmentController;
+    private Pill selectedPill;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prescription_pills);
 
-        //button to add a prescription
-        mAddPrescriptionButton = findViewById(R.id.add_take_pill_button);
-        mAddPrescriptionButton.setOnClickListener(view -> {
-            boolean isPrescriptionCreate = createPrescription();
-            if (isPrescriptionCreate) {
-                Toast.makeText(this, "Prescription added", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-            else {
-                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
-            }
-        });
+        //get the fragment witch contain the checkbox
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        mFragmentController = (checkBoxMMEFragment) fragmentManager.findFragmentById(R.id.fragmentContainerView2);
 
-
-        mFragmentController = (checkBoxMMEFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView2);
         mDefaultTakeTextView = findViewById(R.id.default_time_text_view);
 
-        //Button pour ovrir la page pour ajouter des medicamants
+        //Button open the activity to add a pill
         mAddPillButton = findViewById(R.id.open_add_pill_button);
         mAddPillButton.setOnClickListener(view -> {
             Intent intent = new Intent(AddPrescriptionActivity.this, AddMedicineActivity.class);
@@ -76,17 +63,16 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         });
 
         mSpinnerListPills = findViewById(R.id.spinner);
-        updateSpinner();
-        mSpinnerListPills.setAdapter(adapter);
+        updateSpinner(); //convert the list of pill to a list of string to display in the spinner
 
         mSpinnerListPills.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Pill p = BankPills.getInstance(getApplicationContext()).getPill(mSpinnerListPills.getSelectedItemPosition()+1);
+                Pill p = BankPills.getInstance(getApplicationContext()).getPill(mSpinnerListPills.getSelectedItemPosition() + 1);
                 if (p != null) {
                     setCheckBox(p);
-                    currentPill = p;
-                    mDefaultTakeTextView.setText(String.valueOf(currentPill.getDuration()));
+                    selectedPill = p;
+                    mDefaultTakeTextView.setText(String.valueOf(selectedPill.getDuration()));
                 }
             }
 
@@ -100,53 +86,63 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
         mButtonCalendarPickerStart = findViewById(R.id.calendar_start_button);
         mButtonCalendarPickerStart.setOnClickListener(view -> {
-            showPopUpCalendar(mStartDateTextView, mEndDateTextView);
+            showPopUpCalendarStartDate();
         });
 
         mButtonCalendarPickerEnd = findViewById(R.id.calendar_end_button);
         mButtonCalendarPickerEnd.setOnClickListener(view -> {
-            showPopUpCalendar(null, mEndDateTextView);
+            showPopUpCalendarEndDate();
+        });
+
+        //button to add a prescription
+        mAddPrescriptionButton = findViewById(R.id.add_take_pill_button);
+        mAddPrescriptionButton.setOnClickListener(view -> {
+            if (createPrescription()) {
+                Toast.makeText(this, R.string.prescription_added, Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(this, R.string.fill_all_the_fields, Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
-    private void showPopUpCalendar(TextView startTextView, TextView endTextView) {
-        final Calendar c = Calendar.getInstance();
-        int yy = c.get(Calendar.YEAR);
-        int mm = c.get(Calendar.MONTH);
-        int dd = c.get(Calendar.DAY_OF_MONTH);
-        String patternDateFormat = "d/M/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(patternDateFormat, Locale.FRENCH);
+    protected void onStart() {
+        super.onStart();
+        //implement method editMode(true/false)
+        //TODO: setCheckBox() here
+    }
 
-        DatePickerDialog datePicker = new DatePickerDialog(AddPrescriptionActivity.this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
+    private void showPopUpCalendarStartDate() {
+        Calendar calendar = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(AddPrescriptionActivity.this, (view, year, month, dayOfMonth) -> {
+            String startDate = String.valueOf(dayOfMonth) + "/" + String.valueOf(month + 1) + "/" + String.valueOf(year);
+            mStartDateTextView.setText(startDate);
+            calculateEndDate(startDate);
+        },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
+    }
 
-                String selectedDate = String.valueOf(day) + "/" + String.valueOf(month + 1) + "/" + String.valueOf(year);;
-                Calendar c = Calendar.getInstance();
-                String displayDate = "";
-                try {
-                    Log.d("date", selectedDate + sdf.parse(selectedDate));
-                    c.setTime(sdf.parse(selectedDate));
-                    c.add(Calendar.DATE, currentPill.getDuration()-1);
-                    displayDate = sdf.format(c.getTime());
-                    //Pour avoir la bonne date dans la vue car la date prend aussi le time
-                    c.setTime(sdf.parse(selectedDate));
-                    c.add(Calendar.DATE, currentPill.getDuration()-1);
-                    calculatedDate = sdf.format(c.getTime());
-                    Log.d("date", calculatedDate);
-                } catch (Exception e) {
-                    Log.d("e",e.getMessage());
-                }
-                if (startTextView != null) {
-                    startTextView.setText(selectedDate);
-                    endTextView.setText(displayDate);
-                } else {
-                    endTextView.setText(selectedDate);
-                    calculatedDate = selectedDate;
-                }
-            }
-        }, yy, mm, dd);
-        datePicker.show();
+    private void showPopUpCalendarEndDate() {
+        Calendar calendar = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(AddPrescriptionActivity.this, (view, year, month, dayOfMonth) -> {
+            mEndDateTextView.setText(String.valueOf(dayOfMonth) + "/" + String.valueOf(month + 1) + "/" + String.valueOf(year));
+        },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
+    }
+
+    private void calculateEndDate(String startDate) {
+        Date date = MyCalendarUtils.parseStringInDate(startDate);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, selectedPill.getDuration() - 1); //count the start date in the duration
+        String calculatedDate = MyCalendarUtils.parseDateInString(calendar.getTime());
+        mEndDateTextView.setText(calculatedDate);
     }
 
     protected void onResume() {
@@ -181,18 +177,24 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     }
 
     private boolean createPrescription() {
-        if(currentPill != null
-                && !mStartDateTextView.getText().equals(String.valueOf(R.string.label_date_pill))
-                && !mEndDateTextView.getText().equals(String.valueOf(R.string.label_date_pill))){
+        if (selectedPill == null
+                || mStartDateTextView.getText().toString().equals(getResources().getString(R.string.choseDate))
+                || mEndDateTextView.getText().toString().equals(getResources().getString(R.string.choseDate))) {
+            return false;
+        }
+
+        try {
             String startDate = mStartDateTextView.getText().toString();
-            String endDate = calculatedDate;
+            String endDate = mEndDateTextView.getText().toString();
+
             boolean morning = mFragmentController.isMorningCheckBoxChecked();
             boolean midday = mFragmentController.isMidDayCheckBoxChecked();
             boolean evening = mFragmentController.isEveningCheckBoxChecked();
-            Prescription p = new Prescription(startDate, endDate, morning, midday, evening, currentPill.getId());
-            BankPrescription.getInstance(this).addPrescription(p);
+            BankPrescription.getInstance(this).addPrescription(new Prescription(startDate, endDate, morning, midday, evening, selectedPill.getId()));
             return true;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
-        return false;
     }
 }
