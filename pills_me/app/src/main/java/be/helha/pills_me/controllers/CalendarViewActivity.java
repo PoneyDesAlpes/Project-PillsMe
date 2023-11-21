@@ -84,38 +84,60 @@ public class CalendarViewActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
-                if(p.isMorning()){
-                    if(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER
-                            && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER){
-                        Log.d("DEBUG", "1:No Display");
-                    }
 
-                    if(simplifiedStartDate.equals(simplifiedDateToDisplay)
-                            && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER){
-                        Log.d("DEBUG", "2:Display");
-                    }
+                if((simplifiedStartDate.equals(simplifiedDateToDisplay)
+                        && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER)
+                        ||(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE
+                        && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER)
+                        ||(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE
+                        && simplifiedEndDate.equals(simplifiedDateToDisplay))){
 
-                    if(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE
-                            && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER){
-                        Log.d("DEBUG", "3:Display");
-                    }
+                    Log.d("DEBUG", "Display");
 
-                    if(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE
-                            && simplifiedEndDate.equals(simplifiedDateToDisplay)){
-                        Log.d("DEBUG", "4:Display");
+                    if(p.isMorning()){
+                        calendarElement.addMorningPrescription(p);
                     }
-
-                    if(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE
-                            && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE){
-                        Log.d("DEBUG", "5:No Display");
+                    if(p.isMidDay()){
+                        calendarElement.addMidDayPrescription(p);
+                    }
+                    if(p.isEvening()){
+                        calendarElement.addEveningPrescription(p);
                     }
                 }
-                if(p.isMidDay()){
-                    calendarElement.addMidDayPrescription(p);
-                }
-                if(p.isEvening()){
-                    calendarElement.addEveningPrescription(p);
-                }
+
+//                if(p.isMorning()){
+//                    if(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER
+//                            && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER){
+//                        Log.d("DEBUG", "1:No Display");
+//                    }
+//
+//                    if(simplifiedStartDate.equals(simplifiedDateToDisplay)
+//                            && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER){
+//                        Log.d("DEBUG", "2:Display");
+//                    }
+//
+//                    if(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE
+//                            && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == AFTER){
+//                        Log.d("DEBUG", "3:Display");
+//                    }
+//
+//                    if(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE
+//                            && simplifiedEndDate.equals(simplifiedDateToDisplay)){
+//                        Log.d("DEBUG", "4:Display");
+//                    }
+//
+//                    if(startDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE
+//                            && endDayPrescription.getTime().compareTo(dayToDisplay.getTime()) == BEFORE){
+//                        Log.d("DEBUG", "5:No Display");
+//                    }
+
+//                }
+//                if(p.isMidDay()){
+//                    calendarElement.addMidDayPrescription(p);
+//                }
+//                if(p.isEvening()){
+//                    calendarElement.addEveningPrescription(p);
+//                }
             }
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             Fragment fragment = CalendarElementFragment.newInstance(calendarElement);

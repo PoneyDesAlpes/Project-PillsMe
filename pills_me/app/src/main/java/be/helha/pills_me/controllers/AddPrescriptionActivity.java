@@ -114,7 +114,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         int yy = c.get(Calendar.YEAR);
         int mm = c.get(Calendar.MONTH);
         int dd = c.get(Calendar.DAY_OF_MONTH);
-        String patternDateFormat = "d/M/yyyy ";
+        String patternDateFormat = "d/M/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(patternDateFormat, Locale.FRENCH);
 
         DatePickerDialog datePicker = new DatePickerDialog(AddPrescriptionActivity.this, new DatePickerDialog.OnDateSetListener() {
@@ -125,16 +125,17 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                 Calendar c = Calendar.getInstance();
                 String displayDate = "";
                 try {
+                    Log.d("date", selectedDate + sdf.parse(selectedDate));
                     c.setTime(sdf.parse(selectedDate));
                     c.add(Calendar.DATE, currentPill.getDuration()-1);
                     displayDate = sdf.format(c.getTime());
                     //Pour avoir la bonne date dans la vue car la date prend aussi le time
                     c.setTime(sdf.parse(selectedDate));
-                    c.add(Calendar.DATE, currentPill.getDuration());
+                    c.add(Calendar.DATE, currentPill.getDuration()-1);
                     calculatedDate = sdf.format(c.getTime());
                     Log.d("date", calculatedDate);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Log.d("e",e.getMessage());
                 }
                 if (startTextView != null) {
                     startTextView.setText(selectedDate);
