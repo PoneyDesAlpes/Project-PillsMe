@@ -31,18 +31,38 @@ public class Pill{
         return mName;
     }
 
+    public void setName(String name){
+        mName = name;
+    }
+
     public int getDuration(){return mDuration;}
+
+    public void setDuration(int duration){
+        mDuration = duration;
+    }
 
     public Boolean isMorning(){
         return mMorning;
+    }
+
+    public void setMorning(boolean morning){
+        mMorning = morning;
     }
 
     public Boolean isMidDay(){
         return mMidDay;
     }
 
+    public void setMidDay(boolean midDay){
+        mMidDay = midDay;
+    }
+
     public boolean isEvening(){
         return mEvening;
+    }
+
+    public void setEvening(boolean evening){
+        mEvening = evening;
     }
 
     public Integer getId() {

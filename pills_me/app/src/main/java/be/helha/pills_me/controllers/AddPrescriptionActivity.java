@@ -32,7 +32,10 @@ import be.helha.pills_me.models.Pill;
 
 public class AddPrescriptionActivity extends AppCompatActivity {
 
+    public static final String KEY_ID_PILL = "idPill";
+    public static final String KEY_ID_PRESCRIPTION = "idPrescription";
     private FloatingActionButton mAddPillButton;
+    private FloatingActionButton mModifyPillButton;
     private Spinner mSpinnerListPills;
     private ArrayAdapter<String> adapter;
     private Button mAddPrescriptionButton;
@@ -51,6 +54,13 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prescription_pills);
 
+        Intent intentModifyPrescription = getIntent();
+        int idPrescription = intentModifyPrescription.getIntExtra(KEY_ID_PRESCRIPTION, -1);
+        if (idPrescription != -1)
+        {
+            Log.d("AddPrescriptionActivity", "editMode");
+        }
+
         //button to add a prescription
         mAddPrescriptionButton = findViewById(R.id.add_take_pill_button);
         mAddPrescriptionButton.setOnClickListener(view -> {
@@ -64,6 +74,12 @@ public class AddPrescriptionActivity extends AppCompatActivity {
             }
         });
 
+        mModifyPillButton = findViewById(R.id.floatingActionButton);
+        mModifyPillButton.setOnClickListener(view -> {
+            Intent intent = new Intent(AddPrescriptionActivity.this, AddMedicineActivity.class);
+            intent.putExtra(KEY_ID_PILL, currentPill.getId());
+            startActivity(intent);
+        });
 
         mFragmentController = (checkBoxMMEFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView2);
         mDefaultTakeTextView = findViewById(R.id.default_time_text_view);
@@ -169,13 +185,13 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         if (mFragmentController != null) {
             mFragmentController.resetCheckBox();
             if (p.isMorning()) {
-                mFragmentController.setMorningCheckBoxChecked(p.isMorning());
+                mFragmentController.setMorningCheckBox(p.isMorning());
             }
             if (p.isMidDay()) {
-                mFragmentController.setMidDayCheckBoxChecked(p.isMidDay());
+                mFragmentController.setMidDayCheckBox(p.isMidDay());
             }
             if (p.isEvening()) {
-                mFragmentController.setEveningCheckBoxChecked(p.isEvening());
+                mFragmentController.setEveningCheckBox(p.isEvening());
             }
         }
     }

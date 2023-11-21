@@ -9,6 +9,7 @@
     <string name="mid_day_take">Midi</string>
     <string name="evening_take">Soire</string>
     <string name="add_button">Ajouter</string>
+    <string name="modify_button">Enregistrer</string>
     <string name="title_panel_add_take_pills">Ajouter une prise de médicament</string>
     <string name="open_activity_add_pill">+</string>
     <string name="label_pill">Médicament</string>
@@ -20,4 +21,6 @@
     <string name="default_take">Durée recommandée (jour) :</string>
     <string name="pillNameEmpty">Veuilliez renseigner le nom</string>
     <string name="no_prescription">Pas de préscription à ce jour</string>
+    <string name="edit_pill_title">Modifier Medicament</string>
+    <string name="pillModified">a été modifier avec succes</string>
 </resources>

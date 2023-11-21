@@ -1,5 +1,6 @@
 package be.helha.pills_me.controllers;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,15 +68,15 @@ public class CalendarElementFragment extends Fragment {
             }
             for (Prescription morningPrescription : calendarElement.getMorningPrescription()) {
                 Pill pill = BankPills.getInstance(getContext()).getPill(morningPrescription.getPillId());
-                mContMorning.addView(createtextView(pill.getName()));
+                mContMorning.addView(createtextView(pill.getName(),morningPrescription));
             }
             for (Prescription midDayPrescription : calendarElement.getMidDayPrescription()) {
                 Pill pill = BankPills.getInstance(getContext()).getPill(midDayPrescription.getPillId());
-                mContMidDay.addView(createtextView(pill.getName()));
+                mContMidDay.addView(createtextView(pill.getName(), midDayPrescription));
             }
             for (Prescription eveningPrescription : calendarElement.getEveningPrescription()) {
                 Pill pill = BankPills.getInstance(getContext()).getPill(eveningPrescription.getPillId());
-                mContEvening.addView(createtextView(pill.getName()));
+                mContEvening.addView(createtextView(pill.getName(), eveningPrescription));
             }
         }
 
@@ -94,10 +95,15 @@ public class CalendarElementFragment extends Fragment {
         }
     }
 
-    private View createtextView(String text) {
+    private View createtextView(String text, Prescription prescription) {
         TextView textView = new TextView(getContext());
         textView.setText(text);
         textView.setTextSize(FONT_SIZE);
+        textView.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), AddPrescriptionActivity.class);
+            intent.putExtra(AddPrescriptionActivity.KEY_ID_PRESCRIPTION, prescription.getId());
+            startActivity(intent);
+        });
         return textView;
     }
 }

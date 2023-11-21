@@ -20,7 +20,6 @@ public class checkBoxMMEFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Nullable
@@ -47,15 +46,15 @@ public class checkBoxMMEFragment extends Fragment {
         return mEveningCheckBox.isChecked();
     }
 
-    public void setMorningCheckBoxChecked(boolean b) {
+    public void setMorningCheckBox(boolean b) {
         mMorningCheckBox.setChecked(b);
     }
 
-    public void setMidDayCheckBoxChecked(boolean b) {
+    public void setMidDayCheckBox(boolean b) {
         mMidDayCheckBox.setChecked(b);
     }
 
-    public void setEveningCheckBoxChecked(boolean b) {
+    public void setEveningCheckBox(boolean b) {
         mEveningCheckBox.setChecked(b);
     }
 
