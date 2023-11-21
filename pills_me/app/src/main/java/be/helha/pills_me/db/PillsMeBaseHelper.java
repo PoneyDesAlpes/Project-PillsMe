@@ -9,8 +9,9 @@ public class PillsMeBaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "pillsMeBase.db";
 
     public PillsMeBaseHelper(Context context) {
-            super(context, DATABASE_NAME, null, VERSION);
+        super(context, DATABASE_NAME, null, VERSION);
     }
+
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("create table " + PillsMeDbSchema.PillTable.NAME + "(" +
@@ -22,14 +23,14 @@ public class PillsMeBaseHelper extends SQLiteOpenHelper {
                 PillsMeDbSchema.PillTable.Cols.EVENING + ")"
         );
 
-        sqLiteDatabase.execSQL("create table " + PillsMeDbSchema.PrescriptionTable.NAME +  "(" +
-            PillsMeDbSchema.PrescriptionTable.Cols.ID + " integer primary key autoincrement, " +
-            PillsMeDbSchema.PrescriptionTable.Cols.START_DATE_PERIOD + ", " +
-            PillsMeDbSchema.PrescriptionTable.Cols.END_DATE_PERIOD + ", " +
-            PillsMeDbSchema.PrescriptionTable.Cols.MORNING + ", " +
-            PillsMeDbSchema.PrescriptionTable.Cols.MIDDAY + ", " +
-            PillsMeDbSchema.PrescriptionTable.Cols.EVENING + ", " +
-            PillsMeDbSchema.PrescriptionTable.Cols.PILL_ID + ")"
+        sqLiteDatabase.execSQL("create table " + PillsMeDbSchema.PrescriptionTable.NAME + "(" +
+                PillsMeDbSchema.PrescriptionTable.Cols.ID + " integer primary key autoincrement, " +
+                PillsMeDbSchema.PrescriptionTable.Cols.START_DATE_PERIOD + ", " +
+                PillsMeDbSchema.PrescriptionTable.Cols.END_DATE_PERIOD + ", " +
+                PillsMeDbSchema.PrescriptionTable.Cols.MORNING + ", " +
+                PillsMeDbSchema.PrescriptionTable.Cols.MIDDAY + ", " +
+                PillsMeDbSchema.PrescriptionTable.Cols.EVENING + ", " +
+                PillsMeDbSchema.PrescriptionTable.Cols.PILL_ID + ")"
         );
     }
 

@@ -10,7 +10,7 @@ public class PrescriptionCursorWrapper extends CursorWrapper {
         super(cursor);
     }
 
-    public Prescription getPrescription(){
+    public Prescription getPrescription() {
         String idString =
                 getString(getColumnIndex(PillsMeDbSchema.PrescriptionTable.Cols.ID));
         String startDate =

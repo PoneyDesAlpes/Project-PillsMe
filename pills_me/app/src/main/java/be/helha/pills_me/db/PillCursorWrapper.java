@@ -10,7 +10,7 @@ public class PillCursorWrapper extends CursorWrapper {
         super(cursor);
     }
 
-    public Pill getPill(){
+    public Pill getPill() {
         String idString =
                 getString(getColumnIndex(PillsMeDbSchema.PillTable.Cols.ID));
         String name =
