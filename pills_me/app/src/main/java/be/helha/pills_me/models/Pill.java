@@ -2,7 +2,7 @@ package be.helha.pills_me.models;
 
 import java.io.Serializable;
 
-public class Pill{
+public class Pill {
     private int mIdDb;
     private String mName;
     private int mDuration; //Time in day
@@ -10,7 +10,7 @@ public class Pill{
     private boolean mMidDay;
     private boolean mEvening;
 
-    public Pill(int idDb, String name, int duration, boolean morning, boolean midDay, boolean evening){
+    public Pill(int idDb, String name, int duration, boolean morning, boolean midDay, boolean evening) {
         mIdDb = idDb;
         mName = name;
         mDuration = duration;
@@ -19,7 +19,7 @@ public class Pill{
         mEvening = evening;
     }
 
-    public Pill(String name, int duration, boolean morning, boolean midDay, boolean evening){
+    public Pill(String name, int duration, boolean morning, boolean midDay, boolean evening) {
         mName = name;
         mDuration = duration;
         mMorning = morning;
@@ -27,21 +27,23 @@ public class Pill{
         mEvening = evening;
     }
 
-    public String getName(){
+    public String getName() {
         return mName;
     }
 
-    public int getDuration(){return mDuration;}
+    public int getDuration() {
+        return mDuration;
+    }
 
-    public Boolean isMorning(){
+    public Boolean isMorning() {
         return mMorning;
     }
 
-    public Boolean isMidDay(){
+    public Boolean isMidDay() {
         return mMidDay;
     }
 
-    public boolean isEvening(){
+    public boolean isEvening() {
         return mEvening;
     }
 
