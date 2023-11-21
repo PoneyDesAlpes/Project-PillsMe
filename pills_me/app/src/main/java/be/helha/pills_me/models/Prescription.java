@@ -2,7 +2,7 @@ package be.helha.pills_me.models;
 
 import java.io.Serializable;
 
-public class Prescription  implements Serializable {
+public class Prescription implements Serializable {
     private int mIdDb;
     private String mStartDate;
     private String mEndDate;
@@ -11,7 +11,7 @@ public class Prescription  implements Serializable {
     private boolean mEvening;
     private int mPillId;
 
-    public Prescription(int idDb, String startDate, String endDate, boolean morning, boolean midDay, boolean evening, int pillId){
+    public Prescription(int idDb, String startDate, String endDate, boolean morning, boolean midDay, boolean evening, int pillId) {
         mIdDb = idDb;
         mStartDate = startDate;
         mEndDate = endDate;
@@ -21,7 +21,7 @@ public class Prescription  implements Serializable {
         mPillId = pillId;
     }
 
-    public Prescription(String startDate, String endDate, boolean morning, boolean midDay, boolean evening, int pillId){
+    public Prescription(String startDate, String endDate, boolean morning, boolean midDay, boolean evening, int pillId) {
         mStartDate = startDate;
         mEndDate = endDate;
         mMorning = morning;
@@ -30,19 +30,23 @@ public class Prescription  implements Serializable {
         mPillId = pillId;
     }
 
-    public String getStartDate(){return mStartDate;}
+    public String getStartDate() {
+        return mStartDate;
+    }
 
-    public String getEndDate(){return mEndDate;}
+    public String getEndDate() {
+        return mEndDate;
+    }
 
-    public Boolean isMorning(){
+    public Boolean isMorning() {
         return mMorning;
     }
 
-    public Boolean isMidDay(){
+    public Boolean isMidDay() {
         return mMidDay;
     }
 
-    public boolean isEvening(){
+    public boolean isEvening() {
         return mEvening;
     }
 
@@ -53,5 +57,4 @@ public class Prescription  implements Serializable {
     public int getPillId() {
         return mPillId;
     }
-
 }
