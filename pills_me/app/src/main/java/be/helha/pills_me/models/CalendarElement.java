@@ -12,22 +12,22 @@ public class CalendarElement implements Serializable {
     private List<Prescription> mMidDayPrescription;
     private List<Prescription> mEveningPrescription;
 
-    public CalendarElement(String date){
+    public CalendarElement(String date) {
         mMorningPrescription = new ArrayList<>();
         mMidDayPrescription = new ArrayList<>();
         mEveningPrescription = new ArrayList<>();
         mStringDate = date;
     }
 
-    public void addMorningPrescription(Prescription prescription){
+    public void addMorningPrescription(Prescription prescription) {
         mMorningPrescription.add(prescription);
     }
 
-    public void addMidDayPrescription(Prescription prescription){
+    public void addMidDayPrescription(Prescription prescription) {
         mMidDayPrescription.add(prescription);
     }
 
-    public void addEveningPrescription(Prescription prescription){
+    public void addEveningPrescription(Prescription prescription) {
         mEveningPrescription.add(prescription);
     }
 
