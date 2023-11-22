@@ -1,7 +1,5 @@
 package be.helha.pills_me.models;
 
-import java.io.Serializable;
-
 public class Pill {
     private int mIdDb;
     private String mName;
@@ -39,7 +37,7 @@ public class Pill {
         return mMorning;
     }
 
-    public Boolean isMidDay() {
+    public Boolean isMidday() {
         return mMidDay;
     }
 

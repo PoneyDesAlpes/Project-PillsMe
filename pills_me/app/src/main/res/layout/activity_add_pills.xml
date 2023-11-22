@@ -52,10 +52,8 @@
         android:layout_width="71dp"
         android:layout_height="134dp"
         android:layout_marginStart="36dp"
-        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.276" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/textView2"
@@ -82,18 +80,6 @@
         app:layout_constraintHorizontal_bias="0.845"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="be.helha.pills_me.controllers.CheckBoxMMEFragment"
-        android:layout_width="338dp"
-        android:layout_height="197dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.663" />
-
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
@@ -102,9 +88,18 @@
         android:fontFamily="@font/alatsi"
         android:text="Jour(s)"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView"
         app:layout_constraintStart_toEndOf="@+id/day_number_picker"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.42" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <LinearLayout
+        android:id="@+id/fragment_container_lineare_layout"
+        android:layout_width="323dp"
+        android:layout_height="181dp"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.409"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/day_number_picker"></LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

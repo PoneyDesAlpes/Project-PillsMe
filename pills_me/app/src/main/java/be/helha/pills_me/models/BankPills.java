@@ -3,7 +3,6 @@ package be.helha.pills_me.models;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +82,7 @@ public class BankPills {
         values.put(PillsMeDbSchema.PillTable.Cols.MORNING,
                 (p.isMorning()) ? 1 : 0);
         values.put(PillsMeDbSchema.PillTable.Cols.MIDDAY,
-                (p.isMidDay()) ? 1 : 0);
+                (p.isMidday()) ? 1 : 0);
         values.put(PillsMeDbSchema.PillTable.Cols.EVENING,
                 (p.isEvening()) ? 1 : 0);
         return values;

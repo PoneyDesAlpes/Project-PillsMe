@@ -1,6 +1,7 @@
 package be.helha.pills_me.controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.app.DatePickerDialog;
@@ -31,6 +32,9 @@ import be.helha.pills_me.models.Prescription;
 
 public class AddPrescriptionActivity extends AppCompatActivity {
 
+    public static final String EXTRA_ID_PRESCRIPTION = "id_prescription";
+    private Boolean editMode = false;
+
     private TextView mTitlePage;
     private FloatingActionButton mAddPillButton;
     private Spinner mSpinnerListPills;
@@ -43,6 +47,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     private TextView mDefaultTakeTextView;
     private CheckBoxMMEFragment mFragmentController;
     private Pill selectedPill;
+    private Prescription editPrescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +55,6 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_prescription_pills);
 
         mTitlePage = findViewById(R.id.title_prescription_text_view);
-
-        //get the fragment witch contain the checkbox
-        //TODO : change this to create a new fragment with transaction
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        mFragmentController = (CheckBoxMMEFragment) fragmentManager.findFragmentById(R.id.fragmentContainerView2);
-
         mDefaultTakeTextView = findViewById(R.id.default_time_text_view);
 
         //Button open the activity to add a pill
@@ -74,10 +73,10 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                 Pill p = BankPills.getInstance(getApplicationContext()).getPill(mSpinnerListPills.getSelectedItemPosition() + 1);
                 if (p != null) {
                     selectedPill = p;
+                    mFragmentController = initFragment();
                     mDefaultTakeTextView.setText(String.valueOf(selectedPill.getDuration()));
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
@@ -107,15 +106,14 @@ public class AddPrescriptionActivity extends AppCompatActivity {
             }
         });
 
-        if(true){
-            setEditMode(1);
+        Intent intent = getIntent();
+        int idPrescription = intent.getIntExtra(EXTRA_ID_PRESCRIPTION, -1);
+        if (true) {
+            setEditMode(idPrescription);
+            editMode = true;
         }
-    }
 
-    protected void onStart() {
-        super.onStart();
-        //implement method editMode(true/false)
-        //TODO: setCheckBox() here
+
     }
 
     private void showPopUpCalendarStartDate() {
@@ -153,11 +151,23 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
     protected void onResume() {
         super.onResume();
+        if (editMode) {
+            setSpinner(editPrescription.getIdPill());
+        }
+        else {
+            setSpinner();
+        }
     }
 
     private void setSpinner() {
         adapter = convertPillToSpinner();
         mSpinnerListPills.setAdapter(adapter);
+    }
+
+    private void setSpinner(int idPill) {
+        adapter = convertPillToSpinner();
+        mSpinnerListPills.setAdapter(adapter);
+        mSpinnerListPills.setSelection(idPill - 1);
     }
 
     private ArrayAdapter<String> convertPillToSpinner() {
@@ -168,22 +178,6 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         }
         return new ArrayAdapter<>(AddPrescriptionActivity.this, android.R.layout.simple_spinner_dropdown_item, pillsName);
     }
-
-    //TODO change this to fragment transaction
-//    private void setCheckBox(Pill p) {
-//        if (mFragmentController != null) {
-//            mFragmentController.resetCheckBox();
-//            if (p.isMorning()) {
-//                mFragmentController.setMorningCheckBoxChecked(p.isMorning());
-//            }
-//            if (p.isMidDay()) {
-//                mFragmentController.setMidDayCheckBoxChecked(p.isMidDay());
-//            }
-//            if (p.isEvening()) {
-//                mFragmentController.setEveningCheckBoxChecked(p.isEvening());
-//            }
-//        }
-//    }
 
     private boolean createPrescription() {
         if (selectedPill == null
@@ -208,15 +202,29 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     }
 
     private void setEditMode(int idPrescription){
-        Prescription prescription = BankPrescription.getInstance(this).getPrescription(idPrescription);
+        editPrescription = BankPrescription.getInstance(this).getPrescription(idPrescription);
         //change title
         mTitlePage.setText(R.string.title_prescription_modify);
         //set the spinner with the correct pill
-        mSpinnerListPills.setSelection(prescription.getIdPill() - 1);
+        mSpinnerListPills.setSelection(editPrescription.getIdPill() - 1);
         //set the text view with the correct date
-        mStartDateTextView.setText(prescription.getStartDate());
-        mEndDateTextView.setText(prescription.getEndDate());
+        mStartDateTextView.setText(editPrescription.getStartDate());
+        mEndDateTextView.setText(editPrescription.getEndDate());
         //change the button text to save change
         mAddPrescriptionButton.setText(R.string.submit_button);
+    }
+
+    private CheckBoxMMEFragment initFragment(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container_lineare_layout);
+
+        fragment = CheckBoxMMEFragment.newInstance(
+                selectedPill.isMorning(),
+                selectedPill.isMidday(),
+                selectedPill.isEvening());
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container_lineare_layout, fragment)
+                .commit();
+        return (CheckBoxMMEFragment) fragment;
     }
 }

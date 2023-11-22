@@ -1,6 +1,7 @@
 package be.helha.pills_me.controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
@@ -16,7 +17,7 @@ import be.helha.pills_me.models.Pill;
 public class AddMedicineActivity extends AppCompatActivity {
     private EditText mNameOfPills;
     private Button mAddbutton;
-    private CheckBoxMMEFragment mFragmentController;
+    private CheckBoxMMEFragment mFragmentMME;
     private NumberPicker mNumberPicker;
 
     private static final int MIN_VALUE = 1;
@@ -26,11 +27,6 @@ public class AddMedicineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_pills);
-
-        //Get the fragment which contains the checkboxes
-        //TODO : change this to create a new fragment with transaction
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        mFragmentController = (CheckBoxMMEFragment) fragmentManager.findFragmentById(R.id.fragmentContainerView);
 
         mNameOfPills = findViewById(R.id.name_pill_edit_text);
 
@@ -45,6 +41,8 @@ public class AddMedicineActivity extends AppCompatActivity {
                 finish(); //Close the activity
             }
         });
+
+        mFragmentMME = (CheckBoxMMEFragment) initFragment();
     }
 
     private boolean createPill() {
@@ -58,12 +56,24 @@ public class AddMedicineActivity extends AppCompatActivity {
             BankPills.getInstance(this).addPill(new Pill(
                     mNameOfPills.getText().toString(),
                     mNumberPicker.getValue(),
-                    mFragmentController.isMorningCheckBoxChecked(),
-                    mFragmentController.isMidDayCheckBoxChecked(),
-                    mFragmentController.isEveningCheckBoxChecked()));
+                    mFragmentMME.isMorningCheckBoxChecked(),
+                    mFragmentMME.isMidDayCheckBoxChecked(),
+                    mFragmentMME.isEveningCheckBoxChecked()));
             return true;
         } catch (Exception e) {
             return false;
         }
+    }
+
+    private Fragment initFragment(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container_lineare_layout);
+
+        //defaultValue : false, false, false
+        fragment = CheckBoxMMEFragment.newInstance(false, false, false);
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container_lineare_layout, fragment)
+                .commit();
+        return fragment;
     }
 }

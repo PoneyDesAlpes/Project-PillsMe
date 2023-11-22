@@ -118,12 +118,10 @@
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_marginTop="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.626"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendar_start_button"
-        app:layout_constraintVertical_bias="0.022"
         app:srcCompat="@mipmap/id_calendar_foreground" />
 
     <TextView
@@ -171,17 +169,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView2"
-        android:name="be.helha.pills_me.controllers.CheckBoxMMEFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="88dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.131"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
@@ -195,5 +182,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="212dp" />
+
+    <LinearLayout
+        android:id="@+id/fragment_container_lineare_layout"
+        android:layout_width="313dp"
+        android:layout_height="158dp"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.285"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_end_text_view"></LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
