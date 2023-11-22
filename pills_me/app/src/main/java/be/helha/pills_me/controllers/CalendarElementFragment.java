@@ -66,15 +66,15 @@ public class CalendarElementFragment extends Fragment { //TODO: Refactor this cl
                 mNoPrescription.setVisibility(View.VISIBLE);
             }
             for (Prescription morningPrescription : calendarElement.getMorningPrescription()) {
-                Pill pill = BankPills.getInstance(getContext()).getPill(morningPrescription.getPillId());
+                Pill pill = BankPills.getInstance(getContext()).getPill(morningPrescription.getIdPill());
                 mContMorning.addView(createtextView(pill.getName()));
             }
             for (Prescription midDayPrescription : calendarElement.getMidDayPrescription()) {
-                Pill pill = BankPills.getInstance(getContext()).getPill(midDayPrescription.getPillId());
+                Pill pill = BankPills.getInstance(getContext()).getPill(midDayPrescription.getIdPill());
                 mContMidDay.addView(createtextView(pill.getName()));
             }
             for (Prescription eveningPrescription : calendarElement.getEveningPrescription()) {
-                Pill pill = BankPills.getInstance(getContext()).getPill(eveningPrescription.getPillId());
+                Pill pill = BankPills.getInstance(getContext()).getPill(eveningPrescription.getIdPill());
                 mContEvening.addView(createtextView(pill.getName()));
             }
         }

@@ -54,7 +54,7 @@ public class Prescription implements Serializable {
         return mIdDb;
     }
 
-    public int getPillId() {
+    public int getIdPill() {
         return mPillId;
     }
 }

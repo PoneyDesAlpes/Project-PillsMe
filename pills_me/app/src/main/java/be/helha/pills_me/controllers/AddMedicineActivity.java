@@ -28,6 +28,7 @@ public class AddMedicineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_pills);
 
         //Get the fragment which contains the checkboxes
+        //TODO : change this to create a new fragment with transaction
         FragmentManager fragmentManager = getSupportFragmentManager();
         mFragmentController = (CheckBoxMMEFragment) fragmentManager.findFragmentById(R.id.fragmentContainerView);
 

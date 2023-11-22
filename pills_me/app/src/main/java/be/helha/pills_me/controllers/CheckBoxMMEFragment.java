@@ -13,6 +13,10 @@ import androidx.fragment.app.Fragment;
 import be.helha.pills_me.R;
 
 public class CheckBoxMMEFragment extends Fragment {
+    public static final String KEY_CHECKBOX_MORNING = "KEY_CHECKBOX_MORNING";
+    public static final String KEY_CHECKBOX_MIDDAY = "KEY_CHECKBOX_MIDDAY";
+    public static final String KEY_CHECKBOX_EVENING = "KEY_CHECKBOX_EVENING";
+
     private CheckBox mMorningCheckBox;
     private CheckBox mMidDayCheckBox;
     private CheckBox mEveningCheckBox;
@@ -27,9 +31,17 @@ public class CheckBoxMMEFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_check_box_mme, container, false);
 
+        Boolean morning = getArguments().getBoolean(KEY_CHECKBOX_MORNING);
+        Boolean midDay = getArguments().getBoolean(KEY_CHECKBOX_MIDDAY);
+        Boolean evening = getArguments().getBoolean(KEY_CHECKBOX_EVENING);
+
         mMorningCheckBox = (CheckBox) v.findViewById(R.id.mornign_cb);
         mMidDayCheckBox = (CheckBox) v.findViewById(R.id.mid_day_cb);
         mEveningCheckBox = (CheckBox) v.findViewById(R.id.evening_cb);
+
+        mMorningCheckBox.setChecked(morning);
+        mMidDayCheckBox.setChecked(midDay);
+        mEveningCheckBox.setChecked(evening);
 
         return v;
     }
@@ -46,21 +58,21 @@ public class CheckBoxMMEFragment extends Fragment {
         return mEveningCheckBox.isChecked();
     }
 
-    public void setMorningCheckBoxChecked(boolean b) {
-        mMorningCheckBox.setChecked(b);
-    }
-
-    public void setMidDayCheckBoxChecked(boolean b) {
-        mMidDayCheckBox.setChecked(b);
-    }
-
-    public void setEveningCheckBoxChecked(boolean b) {
-        mEveningCheckBox.setChecked(b);
-    }
-
-    public void resetCheckBox() {
-        mMorningCheckBox.setChecked(false);
-        mMidDayCheckBox.setChecked(false);
-        mEveningCheckBox.setChecked(false);
-    }
+//    public void setMorningCheckBoxChecked(boolean b) {
+//        mMorningCheckBox.setChecked(b);
+//    }
+//
+//    public void setMidDayCheckBoxChecked(boolean b) {
+//        mMidDayCheckBox.setChecked(b);
+//    }
+//
+//    public void setEveningCheckBoxChecked(boolean b) {
+//        mEveningCheckBox.setChecked(b);
+//    }
+//
+//    public void resetCheckBox() {
+//        mMorningCheckBox.setChecked(false);
+//        mMidDayCheckBox.setChecked(false);
+//        mEveningCheckBox.setChecked(false);
+//    }
 }

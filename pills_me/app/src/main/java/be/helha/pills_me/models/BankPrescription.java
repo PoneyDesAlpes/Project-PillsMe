@@ -88,7 +88,7 @@ public class BankPrescription {
         values.put(PillsMeDbSchema.PrescriptionTable.Cols.EVENING,
                 (p.isEvening()) ? 1 : 0);
         values.put(PillsMeDbSchema.PrescriptionTable.Cols.PILL_ID,
-                p.getPillId());
+                p.getIdPill());
         return values;
     }
 

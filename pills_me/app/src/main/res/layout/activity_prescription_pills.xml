@@ -20,12 +20,12 @@
         app:layout_constraintVertical_bias="0.511" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/title_prescription_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/alatsi"
         android:gravity="center_horizontal"
-        android:text="@string/title_panel_add_take_pills"
+        android:text="@string/title_prescription_add"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +54,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.092"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/title_prescription_text_view" />
 
     <TextView
         android:id="@+id/textView7"
@@ -67,7 +67,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.077"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/title_prescription_text_view" />
 
     <TextView
         android:id="@+id/textView11"

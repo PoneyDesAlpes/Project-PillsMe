@@ -31,6 +31,7 @@ import be.helha.pills_me.models.Prescription;
 
 public class AddPrescriptionActivity extends AppCompatActivity {
 
+    private TextView mTitlePage;
     private FloatingActionButton mAddPillButton;
     private Spinner mSpinnerListPills;
     private ArrayAdapter<String> adapter;
@@ -48,7 +49,10 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prescription_pills);
 
+        mTitlePage = findViewById(R.id.title_prescription_text_view);
+
         //get the fragment witch contain the checkbox
+        //TODO : change this to create a new fragment with transaction
         FragmentManager fragmentManager = getSupportFragmentManager();
         mFragmentController = (CheckBoxMMEFragment) fragmentManager.findFragmentById(R.id.fragmentContainerView2);
 
@@ -62,14 +66,13 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         });
 
         mSpinnerListPills = findViewById(R.id.spinner);
-        updateSpinner(); //convert the list of pill to a list of string to display in the spinner
+        setSpinner(); //convert the list of pill to a list of string to display in the spinner
 
         mSpinnerListPills.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Pill p = BankPills.getInstance(getApplicationContext()).getPill(mSpinnerListPills.getSelectedItemPosition() + 1);
                 if (p != null) {
-                    setCheckBox(p);
                     selectedPill = p;
                     mDefaultTakeTextView.setText(String.valueOf(selectedPill.getDuration()));
                 }
@@ -103,6 +106,10 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.fill_all_the_fields, Toast.LENGTH_SHORT).show();
             }
         });
+
+        if(true){
+            setEditMode(1);
+        }
     }
 
     protected void onStart() {
@@ -146,34 +153,37 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
     protected void onResume() {
         super.onResume();
-        updateSpinner();
     }
 
-    //get the name of each pill to display in the spinner
-    private void updateSpinner() {
-        List<Pill> pills = BankPills.getInstance(this).getPills();
-        List<String> pillsName = new ArrayList<>();
-        for (Pill p : pills) {
-            pillsName.add(p.getName());
-        }
-        adapter = new ArrayAdapter<>(AddPrescriptionActivity.this, android.R.layout.simple_spinner_dropdown_item, pillsName);
+    private void setSpinner() {
+        adapter = convertPillToSpinner();
         mSpinnerListPills.setAdapter(adapter);
     }
 
-    private void setCheckBox(Pill p) {
-        if (mFragmentController != null) {
-            mFragmentController.resetCheckBox();
-            if (p.isMorning()) {
-                mFragmentController.setMorningCheckBoxChecked(p.isMorning());
-            }
-            if (p.isMidDay()) {
-                mFragmentController.setMidDayCheckBoxChecked(p.isMidDay());
-            }
-            if (p.isEvening()) {
-                mFragmentController.setEveningCheckBoxChecked(p.isEvening());
-            }
+    private ArrayAdapter<String> convertPillToSpinner() {
+        List<Pill> pills = BankPills.getInstance(this).getPills();
+        List<String> pillsName = new ArrayList<>();
+        for (Pill pill : pills) {
+            pillsName.add(pill.getName());
         }
+        return new ArrayAdapter<>(AddPrescriptionActivity.this, android.R.layout.simple_spinner_dropdown_item, pillsName);
     }
+
+    //TODO change this to fragment transaction
+//    private void setCheckBox(Pill p) {
+//        if (mFragmentController != null) {
+//            mFragmentController.resetCheckBox();
+//            if (p.isMorning()) {
+//                mFragmentController.setMorningCheckBoxChecked(p.isMorning());
+//            }
+//            if (p.isMidDay()) {
+//                mFragmentController.setMidDayCheckBoxChecked(p.isMidDay());
+//            }
+//            if (p.isEvening()) {
+//                mFragmentController.setEveningCheckBoxChecked(p.isEvening());
+//            }
+//        }
+//    }
 
     private boolean createPrescription() {
         if (selectedPill == null
@@ -195,5 +205,18 @@ public class AddPrescriptionActivity extends AppCompatActivity {
             e.printStackTrace();
             return false;
         }
+    }
+
+    private void setEditMode(int idPrescription){
+        Prescription prescription = BankPrescription.getInstance(this).getPrescription(idPrescription);
+        //change title
+        mTitlePage.setText(R.string.title_prescription_modify);
+        //set the spinner with the correct pill
+        mSpinnerListPills.setSelection(prescription.getIdPill() - 1);
+        //set the text view with the correct date
+        mStartDateTextView.setText(prescription.getStartDate());
+        mEndDateTextView.setText(prescription.getEndDate());
+        //change the button text to save change
+        mAddPrescriptionButton.setText(R.string.submit_button);
     }
 }
