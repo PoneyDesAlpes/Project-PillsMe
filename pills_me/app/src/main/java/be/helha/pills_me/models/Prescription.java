@@ -34,20 +34,40 @@ public class Prescription implements Serializable {
         return mStartDate;
     }
 
+    public void setStartDate(String startDate) {
+        mStartDate = startDate;
+    }
+
     public String getEndDate() {
         return mEndDate;
+    }
+
+    public void setEndDate(String endDate) {
+        mEndDate = endDate;
     }
 
     public Boolean isMorning() {
         return mMorning;
     }
 
+    public void setMorning(boolean morning) {
+        mMorning = morning;
+    }
+
     public Boolean isMidDay() {
         return mMidDay;
     }
 
+    public void setMidDay(boolean midDay) {
+        mMidDay = midDay;
+    }
+
     public boolean isEvening() {
         return mEvening;
+    }
+
+    public void setEvening(boolean evening) {
+        mEvening = evening;
     }
 
     public Integer getId() {
@@ -56,5 +76,9 @@ public class Prescription implements Serializable {
 
     public int getIdPill() {
         return mPillId;
+    }
+
+    public void setIdPill(int pillId) {
+        mPillId = pillId;
     }
 }

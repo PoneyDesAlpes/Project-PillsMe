@@ -1,5 +1,6 @@
 package be.helha.pills_me.controllers;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,17 +66,17 @@ public class CalendarElementFragment extends Fragment { //TODO: Refactor this cl
                     && calendarElement.getEveningPrescription().size() == 0){
                 mNoPrescription.setVisibility(View.VISIBLE);
             }
-            for (Prescription morningPrescription : calendarElement.getMorningPrescription()) {
-                Pill pill = BankPills.getInstance(getContext()).getPill(morningPrescription.getIdPill());
-                mContMorning.addView(createtextView(pill.getName()));
+            for (Prescription p : calendarElement.getMorningPrescription()) {
+                Pill pill = BankPills.getInstance(getContext()).getPill(p.getIdPill());
+                mContMorning.addView(createtextView(pill.getName(), p.getId()));
             }
-            for (Prescription midDayPrescription : calendarElement.getMidDayPrescription()) {
-                Pill pill = BankPills.getInstance(getContext()).getPill(midDayPrescription.getIdPill());
-                mContMidDay.addView(createtextView(pill.getName()));
+            for (Prescription p : calendarElement.getMidDayPrescription()) {
+                Pill pill = BankPills.getInstance(getContext()).getPill(p.getIdPill());
+                mContMidDay.addView(createtextView(pill.getName(), p.getId()));
             }
-            for (Prescription eveningPrescription : calendarElement.getEveningPrescription()) {
-                Pill pill = BankPills.getInstance(getContext()).getPill(eveningPrescription.getIdPill());
-                mContEvening.addView(createtextView(pill.getName()));
+            for (Prescription p : calendarElement.getEveningPrescription()) {
+                Pill pill = BankPills.getInstance(getContext()).getPill(p.getIdPill());
+                mContEvening.addView(createtextView(pill.getName(), p.getId()));
             }
         }
 
@@ -94,10 +95,15 @@ public class CalendarElementFragment extends Fragment { //TODO: Refactor this cl
         }
     }
 
-    private View createtextView(String text) {
+    private View createtextView(String text, int idPrescription) {
         TextView textView = new TextView(getContext());
         textView.setText(text);
         textView.setTextSize(FONT_SIZE);
+        textView.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), AddPrescriptionActivity.class);
+            intent.putExtra(AddPrescriptionActivity.EXTRA_ID_PRESCRIPTION, idPrescription);
+            startActivity(intent);
+        });
         return textView;
     }
 }

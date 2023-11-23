@@ -95,29 +95,45 @@ public class AddPrescriptionActivity extends AppCompatActivity {
             showPopUpCalendarEndDate();
         });
 
+
         //button to add a prescription
         mAddPrescriptionButton = findViewById(R.id.add_take_pill_button);
-        mAddPrescriptionButton.setOnClickListener(view -> {
-            if (createPrescription()) {
-                Toast.makeText(this, R.string.prescription_added, Toast.LENGTH_SHORT).show();
-                finish();
-            } else {
-                Toast.makeText(this, R.string.fill_all_the_fields, Toast.LENGTH_SHORT).show();
-            }
-        });
 
         Intent intent = getIntent();
         int idPrescription = intent.getIntExtra(EXTRA_ID_PRESCRIPTION, -1);
         if (idPrescription != -1) {
-            setEditMode(idPrescription);
+            setEditMode(idPrescription); //set the global editPrescription variable
             editMode = true;
+        }
+
+        if (editMode){
+            mAddPrescriptionButton.setOnClickListener(view -> {
+                if (editMode) {
+                    if (modifyPrescription()) {
+                        Toast.makeText(this, R.string.prescription_modified, Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Toast.makeText(this, R.string.fill_all_the_fields, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+        else {
+            mAddPrescriptionButton.setOnClickListener(view -> {
+                if (createPrescription()) {
+                    Toast.makeText(this, R.string.prescription_added, Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(this, R.string.fill_all_the_fields, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
     private void showPopUpCalendarStartDate() {
         Calendar calendar = Calendar.getInstance();
         DatePickerDialog datePickerDialog = new DatePickerDialog(AddPrescriptionActivity.this, (view, year, month, dayOfMonth) -> {
-            String startDate = String.valueOf(dayOfMonth) + "/" + String.valueOf(month + 1) + "/" + String.valueOf(year);
+            String startDate = dayOfMonth + "/" + (month + 1) + "/" + year;
             mStartDateTextView.setText(startDate);
             calculateEndDate(startDate);
         },
@@ -130,7 +146,8 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     private void showPopUpCalendarEndDate() {
         Calendar calendar = Calendar.getInstance();
         DatePickerDialog datePickerDialog = new DatePickerDialog(AddPrescriptionActivity.this, (view, year, month, dayOfMonth) -> {
-            mEndDateTextView.setText(String.valueOf(dayOfMonth) + "/" + String.valueOf(month + 1) + "/" + String.valueOf(year));
+            String endDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+            mEndDateTextView.setText(endDate);
         },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -192,6 +209,23 @@ public class AddPrescriptionActivity extends AppCompatActivity {
             boolean midday = mFragmentController.isMidDayCheckBoxChecked();
             boolean evening = mFragmentController.isEveningCheckBoxChecked();
             BankPrescription.getInstance(this).addPrescription(new Prescription(startDate, endDate, morning, midday, evening, selectedPill.getId()));
+            return true;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean modifyPrescription(){
+        try {
+            editPrescription.setIdPill(selectedPill.getId());
+            editPrescription.setStartDate(mStartDateTextView.getText().toString());
+            editPrescription.setEndDate(mEndDateTextView.getText().toString());
+
+            editPrescription.setMorning(mFragmentController.isMorningCheckBoxChecked());
+            editPrescription.setMidDay(mFragmentController.isMidDayCheckBoxChecked());
+            editPrescription.setEvening(mFragmentController.isEveningCheckBoxChecked());
+            BankPrescription.getInstance(this).updatePrescription(editPrescription);
             return true;
         }catch (Exception e) {
             e.printStackTrace();
