@@ -108,12 +108,10 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int idPrescription = intent.getIntExtra(EXTRA_ID_PRESCRIPTION, -1);
-        if (true) {
+        if (idPrescription != -1) {
             setEditMode(idPrescription);
             editMode = true;
         }
-
-
     }
 
     private void showPopUpCalendarStartDate() {
