@@ -25,4 +25,7 @@
     <string name="fill_all_the_fields">Veuillez remplire TOUT les champs !</string>
     <string name="prescription_modified">La prescription a été modifiée !</string>
     <string name="submit_button">Enregister</string>
+    <string name="editPill">Modifier le médicament</string>
+    <string name="pillEdited">Le médicament à été modifié avec succés !</string>
+    <string name="pillNotEdited">Une erreur est survenue lors de la modification !</string>
 </resources>

@@ -65,4 +65,16 @@ public class CheckBoxMMEFragment extends Fragment {
     public boolean isEveningCheckBoxChecked() {
         return mEveningCheckBox.isChecked();
     }
+
+    public void setMorningCheckBox(boolean morning) {
+        mMorningCheckBox.setChecked(morning);
+    }
+
+    public void setMidDayCheckBox(boolean midday) {
+        mMidDayCheckBox.setChecked(midday);
+    }
+
+    public void setEveningCheckBox(boolean evening) {
+        mEveningCheckBox.setChecked(evening);
+    }
 }

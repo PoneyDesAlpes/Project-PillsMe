@@ -33,10 +33,10 @@ import be.helha.pills_me.models.Prescription;
 public class AddPrescriptionActivity extends AppCompatActivity {
 
     public static final String EXTRA_ID_PRESCRIPTION = "id_prescription";
-    private Boolean editMode = false;
 
     private TextView mTitlePage;
     private FloatingActionButton mAddPillButton;
+    private FloatingActionButton mModifyPillButton;
     private Spinner mSpinnerListPills;
     private ArrayAdapter<String> adapter;
     private Button mAddPrescriptionButton;
@@ -48,6 +48,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     private CheckBoxMMEFragment mFragmentController;
     private Pill selectedPill;
     private Prescription editPrescription;
+    private boolean editMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +58,9 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         mTitlePage = findViewById(R.id.title_prescription_text_view);
         mDefaultTakeTextView = findViewById(R.id.default_time_text_view);
 
-        //Button open the activity to add a pill
-        mAddPillButton = findViewById(R.id.open_add_pill_button);
-        mAddPillButton.setOnClickListener(view -> {
-            Intent intent = new Intent(AddPrescriptionActivity.this, AddMedicineActivity.class);
-            startActivity(intent);
-        });
 
         mSpinnerListPills = findViewById(R.id.spinner);
-        setSpinner(); //convert the list of pill to a list of string to display in the spinner
+        setSpinner();
 
         mSpinnerListPills.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -82,6 +77,20 @@ public class AddPrescriptionActivity extends AppCompatActivity {
             }
         });
 
+        //Button open the activity to add a pill
+        mAddPillButton = findViewById(R.id.add_pill_fab);
+        mAddPillButton.setOnClickListener(view -> {
+            Intent intent = new Intent(AddPrescriptionActivity.this, AddMedicineActivity.class);
+            startActivity(intent);
+        });
+
+        mModifyPillButton = findViewById(R.id.modify_pill_fab);
+        mModifyPillButton.setOnClickListener(view -> {
+            Intent intent = new Intent(AddPrescriptionActivity.this, AddMedicineActivity.class);
+            intent.putExtra(AddMedicineActivity.EXTRA_ID_PILL, selectedPill.getId());
+            startActivity(intent);
+        });
+
         mStartDateTextView = findViewById(R.id.date_start_text_view);
         mEndDateTextView = findViewById(R.id.date_end_text_view);
 
@@ -95,26 +104,21 @@ public class AddPrescriptionActivity extends AppCompatActivity {
             showPopUpCalendarEndDate();
         });
 
-
         //button to add a prescription
         mAddPrescriptionButton = findViewById(R.id.add_take_pill_button);
 
         Intent intent = getIntent();
-        int idPrescription = intent.getIntExtra(EXTRA_ID_PRESCRIPTION, -1);
-        if (idPrescription != -1) {
-            setEditMode(idPrescription); //set the global editPrescription variable
-            editMode = true;
-        }
 
-        if (editMode){
+        if (intent.hasExtra(EXTRA_ID_PRESCRIPTION)) {
+            int idPrescription = intent.getIntExtra(EXTRA_ID_PRESCRIPTION, -1);
+            setEditMode(idPrescription);
+            editMode = true;
             mAddPrescriptionButton.setOnClickListener(view -> {
-                if (editMode) {
-                    if (modifyPrescription()) {
-                        Toast.makeText(this, R.string.prescription_modified, Toast.LENGTH_SHORT).show();
-                        finish();
-                    } else {
-                        Toast.makeText(this, R.string.fill_all_the_fields, Toast.LENGTH_SHORT).show();
-                    }
+                if (modifyPrescription()) {
+                    Toast.makeText(this, R.string.prescription_modified, Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(this, R.string.fill_all_the_fields, Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -235,7 +239,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
     private void setEditMode(int idPrescription){
         editPrescription = BankPrescription.getInstance(this).getPrescription(idPrescription);
-        //change title
+        //change page title
         mTitlePage.setText(R.string.title_prescription_modify);
         //set the spinner with the correct pill
         mSpinnerListPills.setSelection(editPrescription.getIdPill() - 1);
