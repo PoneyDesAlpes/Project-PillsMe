@@ -58,7 +58,6 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         mTitlePage = findViewById(R.id.title_prescription_text_view);
         mDefaultTakeTextView = findViewById(R.id.default_time_text_view);
 
-
         mSpinnerListPills = findViewById(R.id.spinner);
         setSpinner();
 
@@ -68,7 +67,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                 Pill p = BankPills.getInstance(getApplicationContext()).getPill(mSpinnerListPills.getSelectedItemPosition() + 1);
                 if (p != null) {
                     selectedPill = p;
-                    mFragmentController = initFragment();
+                    mFragmentController = initFragment(p.isMorning(), p.isMidday(), p.isEvening());
                     mDefaultTakeTextView.setText(String.valueOf(selectedPill.getDuration()));
                 }
             }
@@ -76,6 +75,11 @@ public class AddPrescriptionActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+
+        if (selectedPill == null) {
+            //show the fragment with the default value
+            initFragment(false, false, false);
+        }
 
         //Button open the activity to add a pill
         mAddPillButton = findViewById(R.id.add_pill_fab);
@@ -250,14 +254,14 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         mAddPrescriptionButton.setText(R.string.submit_button);
     }
 
-    private CheckBoxMMEFragment initFragment(){
+    private CheckBoxMMEFragment initFragment(boolean morning, boolean midday, boolean evening){
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container_lineare_layout);
+        Fragment fragment;
 
         fragment = CheckBoxMMEFragment.newInstance(
-                selectedPill.isMorning(),
-                selectedPill.isMidday(),
-                selectedPill.isEvening());
+                morning,
+                midday,
+                evening);
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container_lineare_layout, fragment)
                 .commit();
